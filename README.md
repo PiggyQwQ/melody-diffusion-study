@@ -19,3 +19,7 @@ python -m unittest discover -s .\melody-diffusion-study\scripts -p test_encode_f
 ```
 
 复跑时使用一个新的输出目录。模型读取 `train.jsonl`、`validation.jsonl` 或 `test.jsonl`，逐行解析 `tokens` 为长度 64 的整数序列，并从 `vocab.json` 读取类别数 `size`。`group_id` 用于曲目组级统计，`start_bar` 从 1 起按原谱顺序计数。`songs.csv` 保留曲目分组、原谱位置和简谱参照。`summary.json` 记录输入校验和、分区统计、音域和验证结果。浏览样例时打开 `samples/index.html`。
+
+## Cantopop 八小节数据
+
+训练、验证、测试 JSONL 和共享词表可直接从 [Cantopop 划分与编码 V1](data/cantopop-018e885/split-encode-v1/README.md) 读取。数据与 ACFS 使用相同的字段、64 格长度和整数 ID。

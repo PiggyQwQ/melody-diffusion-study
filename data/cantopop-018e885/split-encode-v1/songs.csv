@@ -1,0 +1,106 @@
+song_id,title,artist,year,source_kern,group_id,split,source_bars,candidate_windows,encoded_windows,status
+cantopop:C0001,K歌之王,陳奕迅 Eason Chan,2000,Cantopop-corpus-main/Humdrum-files/C0001.krn,,,63,0,0,no_window
+cantopop:C0002,少女的祈禱,楊千嬅 Miriam Yeung,2000,Cantopop-corpus-main/Humdrum-files/C0002.krn,,,95,0,0,no_window
+cantopop:C0003,給自己的情書,王菲 Faye Wong,2000,Cantopop-corpus-main/Humdrum-files/C0003.krn,,,153,0,0,no_window
+cantopop:C0004,感情線上,鄭秀文 Sammi Cheng,2000,Cantopop-corpus-main/Humdrum-files/C0004.krn,cantopop:C0004,train,159,105,104,kept
+cantopop:C0005,活著Viva,謝霆鋒 Nicholas Tse,2000,Cantopop-corpus-main/Humdrum-files/C0005.krn,,,100,0,0,no_window
+cantopop:C0101,Shall We Talk,陳奕迅 Eason Chan,2001,Cantopop-corpus-main/Humdrum-files/C0101.krn,cantopop:C0101,train,145,51,51,kept
+cantopop:C0102,最愛演唱會,陳慧琳 Kelly Chen,2001,Cantopop-corpus-main/Humdrum-files/C0102.krn,cantopop:C0102,train,115,49,49,kept
+cantopop:C0103,爛泥,許志安 Andy Hui,2001,Cantopop-corpus-main/Humdrum-files/C0103.krn,cantopop:C0103,train,112,97,96,kept
+cantopop:C0104,終身美麗,鄭秀文 Sammi Cheng,2001,Cantopop-corpus-main/Humdrum-files/C0104.krn,cantopop:C0104,train,106,1,1,kept
+cantopop:C0105,痛愛,容祖兒 Joey Yung,2001,Cantopop-corpus-main/Humdrum-files/C0105.krn,,,67,0,0,no_window
+cantopop:C0201,好心分手,盧巧音 Candy Lo,2002,Cantopop-corpus-main/Humdrum-files/C0201.krn,,,69,0,0,no_window
+cantopop:C0202,爭氣,容祖兒 Joey Yung,2002,Cantopop-corpus-main/Humdrum-files/C0202.krn,cantopop:C0202,validation,82,55,55,kept
+cantopop:C0203,女人之苦,許志安 Andy Hui,2002,Cantopop-corpus-main/Humdrum-files/C0203.krn,cantopop:C0203,train,148,77,77,kept
+cantopop:C0204,愛不釋手,李克勤 Hacken Lee,2002,Cantopop-corpus-main/Humdrum-files/C0204.krn,cantopop:C0204,train,108,24,24,kept
+cantopop:C0205,明年今日,陳奕迅 Eason Chan,2002,Cantopop-corpus-main/Humdrum-files/C0205.krn,cantopop:C0205,test,87,56,55,kept
+cantopop:C0301,七友,梁漢文 Edmond Leung,2003,Cantopop-corpus-main/Humdrum-files/C0301.krn,,,125,0,0,no_window
+cantopop:C0302,我的驕傲,容祖兒 Joey Yung,2003,Cantopop-corpus-main/Humdrum-files/C0302.krn,cantopop:C0302,train,110,90,88,kept
+cantopop:C0303,十面埋伏,陳奕迅 Eason Chan,2003,Cantopop-corpus-main/Humdrum-files/C0303.krn,cantopop:C0303,test,95,47,47,kept
+cantopop:C0304,我不會唱歌,李克勤 Hacken Lee,2003,Cantopop-corpus-main/Humdrum-files/C0304.krn,,,92,0,0,no_window
+cantopop:C0305,可惜我是水瓶座,楊千嬅 Miriam Yeung,2003,Cantopop-corpus-main/Humdrum-files/C0305.krn,,,69,0,0,no_window
+cantopop:C0401,小城大事,楊千嬅 Miriam Yeung,2004,Cantopop-corpus-main/Humdrum-files/C0401.krn,cantopop:C0401,train,92,78,77,kept
+cantopop:C0402,空中飛人,李克勤 Hacken Lee,2004,Cantopop-corpus-main/Humdrum-files/C0402.krn,,,55,0,0,no_window
+cantopop:C0403,世上只有,容祖兒 Joey Yung,2004,Cantopop-corpus-main/Humdrum-files/C0403.krn,cantopop:C0403,train,119,86,85,kept
+cantopop:C0404,愛與誠,古巨基 Leo Ku,2004,Cantopop-corpus-main/Humdrum-files/C0404.krn,cantopop:C0404,train,103,67,67,kept
+cantopop:C0405,嫁妝,陳慧琳 Kelly Chen,2004,Cantopop-corpus-main/Humdrum-files/C0405.krn,,,76,0,0,no_window
+cantopop:C0501,夕陽無限好,陳奕迅 Eason Chan,2005,Cantopop-corpus-main/Humdrum-files/C0501.krn,,,73,0,0,no_window
+cantopop:C0502,天才與白痴,古巨基 Leo Ku,2005,Cantopop-corpus-main/Humdrum-files/C0502.krn,,,111,0,0,no_window
+cantopop:C0503,情非首爾,李克勤 Hacken Lee,2005,Cantopop-corpus-main/Humdrum-files/C0503.krn,,,88,0,0,no_window
+cantopop:C0504,烈女,楊千嬅 Miriam Yeung,2005,Cantopop-corpus-main/Humdrum-files/C0504.krn,,,97,0,0,no_window
+cantopop:C0505,無賴,鄭中基 Ronald Cheng,2005,Cantopop-corpus-main/Humdrum-files/C0505.krn,,,100,0,0,no_window
+cantopop:C0601,愛得太遲,古巨基 Leo Ku,2006,Cantopop-corpus-main/Humdrum-files/C0601.krn,,,95,0,0,no_window
+cantopop:C0602,紅綠燈,鄭融 Stephanie Cheng,2006,Cantopop-corpus-main/Humdrum-files/C0602.krn,,,91,0,0,no_window
+cantopop:C0603,華麗邂逅,容祖兒 Joey Yung,2006,Cantopop-corpus-main/Humdrum-files/C0603.krn,,,58,0,0,no_window
+cantopop:C0604,最佳損友,陳奕迅 Eason Chan,2006,Cantopop-corpus-main/Humdrum-files/C0604.krn,,,68,0,0,no_window
+cantopop:C0605,富士山下,陳奕迅 Eason Chan,2006,Cantopop-corpus-main/Humdrum-files/C0605.krn,,,93,0,0,no_window
+cantopop:C0701,愛回家,古巨基 Leo Ku,2007,Cantopop-corpus-main/Humdrum-files/C0701.krn,,,96,0,0,no_window
+cantopop:C0702,男人KTV,側田 Justin Lo,2007,Cantopop-corpus-main/Humdrum-files/C0702.krn,,,70,0,0,no_window
+cantopop:C0703,花落誰家,李克勤 Hacken Lee,2007,Cantopop-corpus-main/Humdrum-files/C0703.krn,cantopop:C0703,train,105,34,33,kept
+cantopop:C0704,逼得太緊,吳雨霏 Kary Ng,2007,Cantopop-corpus-main/Humdrum-files/C0704.krn,,,67,0,0,no_window
+cantopop:C0705,木紋,何韻詩 Denise Ho,2007,Cantopop-corpus-main/Humdrum-files/C0705.krn,,,125,0,0,no_window
+cantopop:C0801,撈月亮的人,楊千嬅 Miriam Yeung,2008,Cantopop-corpus-main/Humdrum-files/C0801.krn,,,62,0,0,no_window
+cantopop:C0802,囍帖街,謝安琪 Kay Tse,2008,Cantopop-corpus-main/Humdrum-files/C0802.krn,,,50,0,0,no_window
+cantopop:C0803,愛不疚,林峯 Raymond Lam,2008,Cantopop-corpus-main/Humdrum-files/C0803.krn,cantopop:C0803,train,120,76,76,kept
+cantopop:C0804,櫻花樹下,張敬軒 Hins Cheung,2008,Cantopop-corpus-main/Humdrum-files/C0804.krn,,,66,0,0,no_window
+cantopop:C0805,跑步機上,容祖兒 Joey Yung,2008,Cantopop-corpus-main/Humdrum-files/C0805.krn,,,98,0,0,no_window
+cantopop:C0901,地球很危險,古巨基 Leo Ku,2009,Cantopop-corpus-main/Humdrum-files/C0901.krn,cantopop:C0901,train,126,50,49,kept
+cantopop:C0902,你瞞我瞞,陳柏宇 Jason Chan,2009,Cantopop-corpus-main/Humdrum-files/C0902.krn,cantopop:C0902,test,124,79,78,kept
+cantopop:C0903,原來過得很快樂,楊千嬅 Miriam Yeung,2009,Cantopop-corpus-main/Humdrum-files/C0903.krn,cantopop:C0903,train,140,69,69,kept
+cantopop:C0904,給自己的信,鍾舒漫 Sherman Chung,2009,Cantopop-corpus-main/Humdrum-files/C0904.krn,,,125,0,0,no_window
+cantopop:C0905,年度之歌,謝安琪 Kay Tse,2009,Cantopop-corpus-main/Humdrum-files/C0905.krn,,,93,0,0,no_window
+cantopop:C1001,愛的習慣,側田 Justin Lo,2010,Cantopop-corpus-main/Humdrum-files/C1001.krn,,,132,0,0,no_window
+cantopop:C1002,破相,容祖兒 Joey Yung,2010,Cantopop-corpus-main/Humdrum-files/C1002.krn,,,96,0,0,no_window
+cantopop:C1003,陀飛輪,陳奕迅 Eason Chan,2010,Cantopop-corpus-main/Humdrum-files/C1003.krn,cantopop:C1003,train,136,20,19,kept
+cantopop:C1004,SimpleLoveSong,RubberBand,2010,Cantopop-corpus-main/Humdrum-files/C1004.krn,,,140,0,0,no_window
+cantopop:C1005,天梯,C AllStar,2010,Cantopop-corpus-main/Humdrum-files/C1005.krn,,,118,0,0,no_window
+cantopop:C1101,末日,王菀之 Ivana Wong,2011,Cantopop-corpus-main/Humdrum-files/C1101.krn,,,68,0,0,no_window
+cantopop:C1102,牆紙,容祖兒 Joey Yung,2011,Cantopop-corpus-main/Humdrum-files/C1102.krn,,,66,0,0,no_window
+cantopop:C1103,年年,蔡卓妍 Charlene Choi,2011,Cantopop-corpus-main/Humdrum-files/C1103.krn,,,91,0,0,no_window
+cantopop:C1104,戀上外星人,張智霖 Julian Cheung,2011,Cantopop-corpus-main/Humdrum-files/C1104.krn,,,113,0,0,no_window
+cantopop:C1105,花千樹,容祖兒 Joey Yung,2011,Cantopop-corpus-main/Humdrum-files/C1105.krn,cantopop:C1105,train,81,29,29,kept
+cantopop:C1201,留白,王菀之 Ivana Wong,2012,Cantopop-corpus-main/Humdrum-files/C1201.krn,,,63,0,0,no_window
+cantopop:C1202,戀無可戀,古巨基 Leo Ku,2012,Cantopop-corpus-main/Humdrum-files/C1202.krn,cantopop:C1202,train,118,21,21,kept
+cantopop:C1203,昨天,Mr.,2012,Cantopop-corpus-main/Humdrum-files/C1203.krn,,,152,0,0,no_window
+cantopop:C1204,白頭到老,蔡卓妍 Charlene Choi,2012,Cantopop-corpus-main/Humdrum-files/C1204.krn,,,117,0,0,no_window
+cantopop:C1205,重新長大,許廷鏗 Alfred Hui,2012,Cantopop-corpus-main/Humdrum-files/C1205.krn,cantopop:C1205,train,101,27,27,kept
+cantopop:C1301,天窗,容祖兒 Joey Yung,2013,Cantopop-corpus-main/Humdrum-files/C1301.krn,cantopop:C1301,train,108,50,50,kept
+cantopop:C1302,青春頌,許廷鏗 Alfred Hui,2013,Cantopop-corpus-main/Humdrum-files/C1302.krn,,,69,0,0,no_window
+cantopop:C1303,任我行,陳奕迅 Eason Chan,2013,Cantopop-corpus-main/Humdrum-files/C1303.krn,,,126,0,0,no_window
+cantopop:C1304,最好的時刻,謝安琪 Kay Tse,2013,Cantopop-corpus-main/Humdrum-files/C1304.krn,,,131,0,0,no_window
+cantopop:C1305,哥歌,王菀之 Ivana Wong,2013,Cantopop-corpus-main/Humdrum-files/C1305.krn,,,117,0,0,no_window
+cantopop:C1401,獨家村,謝安琪 Kay Tse,2014,Cantopop-corpus-main/Humdrum-files/C1401.krn,,,115,0,0,no_window
+cantopop:C1402,青春常駐,張敬軒 Hins Cheung,2014,Cantopop-corpus-main/Humdrum-files/C1402.krn,,,112,0,0,no_window
+cantopop:C1403,流淚行勝利道,許志安 Andy Hui,2014,Cantopop-corpus-main/Humdrum-files/C1403.krn,cantopop:C1403,train,142,66,66,kept
+cantopop:C1404,高山低谷,林奕匡 Phil Lam,2014,Cantopop-corpus-main/Humdrum-files/C1404.krn,,,118,0,0,no_window
+cantopop:C1405,越難越愛,吳若希 Jinny Ng,2014,Cantopop-corpus-main/Humdrum-files/C1405.krn,,,55,0,0,no_window
+cantopop:C1501,找對的人,張敬軒 Hins Cheung,2015,Cantopop-corpus-main/Humdrum-files/C1501.krn,,,107,0,0,no_window
+cantopop:C1502,我們都是這樣長大的,林欣彤 Mag Lam,2015,Cantopop-corpus-main/Humdrum-files/C1502.krn,,,131,0,0,no_window
+cantopop:C1503,無條件,陳奕迅 Eason Chan,2015,Cantopop-corpus-main/Humdrum-files/C1503.krn,cantopop:C1503,train,105,56,55,kept
+cantopop:C1504,逾越生死,C AllStar,2015,Cantopop-corpus-main/Humdrum-files/C1504.krn,,,80,0,0,no_window
+cantopop:C1505,過客別墅,張敬軒 Hins Cheung,2015,Cantopop-corpus-main/Humdrum-files/C1505.krn,,,126,0,0,no_window
+cantopop:C1601,女神,鄭欣宜 Joyce Cheng,2016,Cantopop-corpus-main/Humdrum-files/C1601.krn,,,77,0,0,no_window
+cantopop:C1602,無人知道雙子座,容祖兒 Joey Yung,2016,Cantopop-corpus-main/Humdrum-files/C1602.krn,,,67,0,0,no_window
+cantopop:C1603,百姓,吳業坤 James Ng,2016,Cantopop-corpus-main/Humdrum-files/C1603.krn,,,106,0,0,no_window
+cantopop:C1604,我的志願,許廷鏗 Alfred Hui,2016,Cantopop-corpus-main/Humdrum-files/C1604.krn,,,124,0,0,no_window
+cantopop:C1605,矛盾一生,JW,2016,Cantopop-corpus-main/Humdrum-files/C1605.krn,,,70,0,0,no_window
+cantopop:C1701,失魂記,李克勤 Hacken Lee,2017,Cantopop-corpus-main/Humdrum-files/C1701.krn,cantopop:C1701,validation,119,47,47,kept
+cantopop:C1702,長相廝守,ToNick,2017,Cantopop-corpus-main/Humdrum-files/C1702.krn,,,148,0,0,no_window
+cantopop:C1703,天網,周柏豪 Pakho Chau,2017,Cantopop-corpus-main/Humdrum-files/C1703.krn,,,76,0,0,no_window
+cantopop:C1704,天敵,衛蘭 Janice Vidal,2017,Cantopop-corpus-main/Humdrum-files/C1704.krn,,,107,0,0,no_window
+cantopop:C1705,霸氣情歌,陳柏宇 Jason Chan,2017,Cantopop-corpus-main/Humdrum-files/C1705.krn,,,112,0,0,no_window
+cantopop:C1801,老少平安,周柏豪 Pakho Chau,2018,Cantopop-corpus-main/Humdrum-files/C1801.krn,cantopop:C1801,validation,114,79,79,kept
+cantopop:C1802,認真如初,陳柏宇 Jason Chan,2018,Cantopop-corpus-main/Humdrum-files/C1802.krn,,,121,0,0,no_window
+cantopop:C1803,一個女人和浴室,謝安琪 Kay Tse,2018,Cantopop-corpus-main/Humdrum-files/C1803.krn,,,116,0,0,no_window
+cantopop:C1804,停半分鐘聽一闋歌,許廷鏗 Alfred Hui,2018,Cantopop-corpus-main/Humdrum-files/C1804.krn,cantopop:C1804,train,129,43,43,kept
+cantopop:C1805,百年樹木,張敬軒 Hins Cheung,2018,Cantopop-corpus-main/Humdrum-files/C1805.krn,cantopop:C1805,train,152,46,46,kept
+cantopop:C1901,我們與愛的距離,許廷鏗 Alfred Hui,2019,Cantopop-corpus-main/Humdrum-files/C1901.krn,,,104,0,0,no_window
+cantopop:C1902,最後的信仰,林二汶 Eman Lam,2019,Cantopop-corpus-main/Humdrum-files/C1902.krn,,,97,0,0,no_window
+cantopop:C1903,我們都是這樣長大的,鄭秀文 Sammi Cheng,2019,Cantopop-corpus-main/Humdrum-files/C1903.krn,,,83,0,0,no_window
+cantopop:C1904,2084,Dear Jane,2019,Cantopop-corpus-main/Humdrum-files/C1904.krn,,,94,0,0,no_window
+cantopop:C1905,讓愛高飛,周柏豪 Pakho Chau,2019,Cantopop-corpus-main/Humdrum-files/C1905.krn,,,109,0,0,no_window
+cantopop:C2001,呼吸有害,莫文蔚 Karen Mok,2020,Cantopop-corpus-main/Humdrum-files/C2001.krn,,,59,0,0,no_window
+cantopop:C2002,感情這回事,陳柏宇 Jason Chan,2020,Cantopop-corpus-main/Humdrum-files/C2002.krn,cantopop:C2002,train,94,22,21,kept
+cantopop:C2003,劫後餘生,周柏豪 Pakho Chau,2020,Cantopop-corpus-main/Humdrum-files/C2003.krn,,,95,0,0,no_window
+cantopop:C2004,無力感,許廷鏗 Alfred Hui,2020,Cantopop-corpus-main/Humdrum-files/C2004.krn,,,140,0,0,no_window
+cantopop:C2005,銀河修理員,Dear Jane,2020,Cantopop-corpus-main/Humdrum-files/C2005.krn,,,113,0,0,no_window

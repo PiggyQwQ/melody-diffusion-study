@@ -1,0 +1,146 @@
+{
+  "format_version": "cantopop-split-encode-v1",
+  "source_commit": "018e88540b917c40dc3f7248ed98908208544b54",
+  "source_zip_sha256": "21e2cef97635e63f20a7a2207935e74ca4c6cc6c1ba9e93278bb2c06434ec85c",
+  "seed": 20261118,
+  "folk_inputs_sha256": {
+    "vocab.json": "71e5534f1137b6027326a628cae80809eb3797178bbdddf6cf6229872f74e8e8",
+    "near_repeats_review.csv": "1862b44b473c6d8147a056efb08962ade4f92e0e8247916389d1917f147391ee",
+    "train.jsonl": "bcf4fa6c5fa85075d4be2b3c60d610c0c0ba86dfe80321163f015d33e2ca9c8d",
+    "validation.jsonl": "a08af368b256cbd56a25632fcb4f0437db2f7845c0c01079aa96816450709805",
+    "test.jsonl": "d2f37cd8768b46216fa005a5aa18d3bc702209af26a71c6dfb8a87d5c5537c16"
+  },
+  "meter_basis": "2/4 in the publisher's Humdrum transcriptions",
+  "midi_min": 38,
+  "midi_max": 86,
+  "vocabulary_size": 51,
+  "window_slots": 64,
+  "splits": {
+    "train": {
+      "songs": 25,
+      "groups": 25,
+      "windows": 1323,
+      "slots": 84672
+    },
+    "validation": {
+      "songs": 3,
+      "groups": 3,
+      "windows": 181,
+      "slots": 11584
+    },
+    "test": {
+      "songs": 3,
+      "groups": 3,
+      "windows": 180,
+      "slots": 11520
+    }
+  },
+  "screened_songs": 105,
+  "encoded_songs": 31,
+  "encoded_windows": 1684,
+  "discarded_overlap_windows": 13,
+  "sparse_pop_overlap_windows": 13,
+  "stable_score_key_windows": 1655,
+  "pop_cross_split_exact_matches": 0,
+  "pop_near_pairs": 0,
+  "pop_cross_split_near_pairs": 0,
+  "acfs_cross_corpus_exact_pairs": 3,
+  "acfs_cross_corpus_near_song_pairs": 0,
+  "excluded_cantopop_groups": 0,
+  "excluded_folk_train_groups_for_cross_corpus_review": [
+    "hebei1:9"
+  ],
+  "excluded_folk_train_groups_for_existing_review": [
+    "guangdong:758",
+    "hainan:298",
+    "hainan:319",
+    "hainan:321",
+    "hainan:35",
+    "hainan:524",
+    "hainan:525",
+    "hainan:652",
+    "jiangsu1:35",
+    "jiangsu2:1149",
+    "tianjin:194",
+    "tianjin:504"
+  ],
+  "round_trip_windows": 1684,
+  "replay_examples": 20,
+  "pop_matched_training_file": "train.jsonl",
+  "matched_training": {
+    "method": "Descending pop song window counts; nearest windows to pop song centroid by mean squared standardized feature distance; one unused ACFS song/group per pop song; seeded song tie order",
+    "seed": 20261118,
+    "feature_scales": {
+      "note_attacks": 8.013877566362334,
+      "mean_attack_midi": 4.680657869055104,
+      "midi_span": 3.255176787661039,
+      "rest_slots": 12.355198647714191
+    },
+    "eligible_folk_train": {
+      "songs": 3379,
+      "groups": 3356,
+      "windows": 32461,
+      "tokens": 2077504,
+      "observed_midi_min": 38,
+      "observed_midi_max": 86,
+      "mean": {
+        "note_attacks": 24.595453005144634,
+        "mean_attack_midi": 65.52917574588582,
+        "midi_span": 12.035827608514833,
+        "rest_slots": 4.780937124549459
+      },
+      "sd": {
+        "note_attacks": 7.130027820499574,
+        "mean_attack_midi": 4.495800258547001,
+        "midi_span": 3.513002830618872,
+        "rest_slots": 9.554539031380532
+      }
+    },
+    "pop_train": {
+      "songs": 25,
+      "groups": 25,
+      "windows": 1323,
+      "tokens": 84672,
+      "observed_midi_min": 43,
+      "observed_midi_max": 76,
+      "mean": {
+        "note_attacks": 22.58125472411187,
+        "mean_attack_midi": 60.1567076746613,
+        "midi_span": 11.645502645502646,
+        "rest_slots": 14.322751322751323
+      },
+      "sd": {
+        "note_attacks": 8.013877566362334,
+        "mean_attack_midi": 4.680657869055104,
+        "midi_span": 3.255176787661039,
+        "rest_slots": 12.355198647714191
+      }
+    },
+    "matched_folk_train": {
+      "songs": 25,
+      "groups": 25,
+      "windows": 1323,
+      "tokens": 84672,
+      "observed_midi_min": 48,
+      "observed_midi_max": 76,
+      "mean": {
+        "note_attacks": 22.379440665154952,
+        "mean_attack_midi": 62.054859113120834,
+        "midi_span": 11.680272108843537,
+        "rest_slots": 6.811035525321239
+      },
+      "sd": {
+        "note_attacks": 5.242099536260894,
+        "mean_attack_midi": 3.3920710354396637,
+        "midi_span": 2.3688191007342962,
+        "rest_slots": 6.974890657461607
+      }
+    },
+    "mean_differences_folk_minus_pop": {
+      "note_attacks": -0.2018140589569164,
+      "mean_attack_midi": 1.8981514384595357,
+      "midi_span": 0.034769463340891704,
+      "rest_slots": -7.511715797430083
+    }
+  }
+}

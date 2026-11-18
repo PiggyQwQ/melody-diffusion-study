@@ -1,0 +1,14 @@
+window_id,song_id,start_bar,reason
+cantopop:C0004@80,cantopop:C0004,80,sparse_exact_pop_overlap
+cantopop:C0103@49,cantopop:C0103,49,sparse_exact_pop_overlap
+cantopop:C0205@42,cantopop:C0205,42,sparse_exact_pop_overlap|exact_acfs_overlap
+cantopop:C0302@31,cantopop:C0302,31,sparse_exact_pop_overlap
+cantopop:C0302@71,cantopop:C0302,71,sparse_exact_pop_overlap
+cantopop:C0401@39,cantopop:C0401,39,sparse_exact_pop_overlap
+cantopop:C0403@35,cantopop:C0403,35,sparse_exact_pop_overlap|exact_acfs_overlap
+cantopop:C0703@47,cantopop:C0703,47,sparse_exact_pop_overlap|exact_acfs_overlap
+cantopop:C0901@61,cantopop:C0901,61,sparse_exact_pop_overlap
+cantopop:C0902@49,cantopop:C0902,49,sparse_exact_pop_overlap
+cantopop:C1003@47,cantopop:C1003,47,sparse_exact_pop_overlap
+cantopop:C1503@49,cantopop:C1503,49,sparse_exact_pop_overlap
+cantopop:C2002@33,cantopop:C2002,33,sparse_exact_pop_overlap

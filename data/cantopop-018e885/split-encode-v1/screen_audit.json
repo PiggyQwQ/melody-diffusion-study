@@ -1,0 +1,17 @@
+{
+  "single_kern_songs": 105,
+  "songs_with_2_4": 36,
+  "source_bars": 10746,
+  "meter_windows": 3294,
+  "grid_windows": 2514,
+  "uncut_sounding_windows": 1697,
+  "in_vocab_windows": 1697,
+  "stable_key_windows": 1668,
+  "songs_with_2_4_windows": 31,
+  "songs_with_grid_windows": 31,
+  "songs_with_uncut_sounding_windows": 31,
+  "songs_with_in_vocab_windows": 31,
+  "songs_with_stable_key_windows": 31,
+  "metadata_songs": 105,
+  "score_files": 105
+}
