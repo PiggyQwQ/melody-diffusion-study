@@ -15,6 +15,12 @@
 
 筛选和分区统计见 [screen_audit.json](screen_audit.json) 和 [summary.json](summary.json)。[discarded_windows.csv](discarded_windows.csv) 保存精确重复窗口的剔除记录。[SHA256SUMS](SHA256SUMS) 可核对数据文件。
 
+## 回放、去重与匹配记录
+
+- [20 份回放样例](samples/index.html) 提供解码后的 MIDI、MusicXML 和五线谱。MIDI 使用固定 90 BPM 和钢琴音色。[样例索引](samples/index.csv) · [拍号复核](meter_review.md)
+- [分组依据](group_edges.csv)、[近重复复核表](near_repeats_review.csv) 和[跨库匹配审计](acfs_overlap_review.csv) 记录分组与去重结果。
+- [训练集配对](training_pairs.json) 列出两侧各 25 个曲目组和 1,323 个窗口的 ID。[训练先验统计](training_priors.json) 保存按音级的起音、时值和最佳五音模板覆盖率。匹配 ACFS 的整数序列由下面的命令从本地 ACFS 训练集生成。
+
 ## 复现
 
 从仓库根目录执行以下命令。示例使用 Python 3.11 或更新版本、Verovio 6.4.1 和 Mido 1.3.3。将作者 ZIP 和已生成的 ACFS 数据放在仓库外，按实际位置调整路径。ACFS 目录需包含三个整数 JSONL、词表及 `near_repeats_review.csv`。一并生成的匹配民歌训练集由已有的 ACFS 本地数据构建。[ACFS 生成说明](../../acfs-v261103/split-encode-v1/README.md)

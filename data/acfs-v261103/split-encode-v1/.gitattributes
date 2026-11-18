@@ -1,3 +1,4 @@
 *.csv -text
 *.json -text
 encoded_SHA256SUMS -text
+samples/** -text

@@ -1,0 +1,21 @@
+window_id,title,artist,split,source_kern,features,midi,musicxml,svg
+cantopop:C1701@101,失魂記,李克勤 Hacken Lee,validation,Cantopop-corpus-main/Humdrum-files/C1701.krn,adjacent_rests|cross_bar_tie|leading_rest|rest|same_pitch_reattack|sustained_rest,01-C1701-bar101.mid,01-C1701-bar101.musicxml,01-C1701-bar101.svg
+cantopop:C0204@91,愛不釋手,李克勤 Hacken Lee,train,Cantopop-corpus-main/Humdrum-files/C0204.krn,adjacent_rests|cross_bar_tie|rest|same_pitch_reattack|sustained_rest,02-C0204-bar91.mid,02-C0204-bar91.musicxml,02-C0204-bar91.svg
+cantopop:C0205@15,明年今日,陳奕迅 Eason Chan,test,Cantopop-corpus-main/Humdrum-files/C0205.krn,adjacent_rests|leading_rest|rest|sustained_rest,03-C0205-bar15.mid,03-C0205-bar15.musicxml,03-C0205-bar15.svg
+cantopop:C1805@52,百年樹木,張敬軒 Hins Cheung,train,Cantopop-corpus-main/Humdrum-files/C1805.krn,cross_bar_tie|rest|same_pitch_reattack|sustained_rest,04-C1805-bar52.mid,04-C1805-bar52.musicxml,04-C1805-bar52.svg
+cantopop:C0202@8,爭氣,容祖兒 Joey Yung,validation,Cantopop-corpus-main/Humdrum-files/C0202.krn,rest|same_pitch_reattack|sustained_rest,05-C0202-bar8.mid,05-C0202-bar8.musicxml,05-C0202-bar8.svg
+cantopop:C0902@34,你瞞我瞞,陳柏宇 Jason Chan,test,Cantopop-corpus-main/Humdrum-files/C0902.krn,adjacent_rests|rest|same_pitch_reattack|sustained_rest,06-C0902-bar34.mid,06-C0902-bar34.musicxml,06-C0902-bar34.svg
+cantopop:C0901@116,地球很危險,古巨基 Leo Ku,train,Cantopop-corpus-main/Humdrum-files/C0901.krn,adjacent_rests|cross_bar_tie|rest|sustained_rest,07-C0901-bar116.mid,07-C0901-bar116.musicxml,07-C0901-bar116.svg
+cantopop:C1801@61,老少平安,周柏豪 Pakho Chau,validation,Cantopop-corpus-main/Humdrum-files/C1801.krn,adjacent_rests|leading_rest|rest|same_pitch_reattack|sustained_rest,08-C1801-bar61.mid,08-C1801-bar61.musicxml,08-C1801-bar61.svg
+cantopop:C0303@65,十面埋伏,陳奕迅 Eason Chan,test,Cantopop-corpus-main/Humdrum-files/C0303.krn,cross_bar_tie|rest|same_pitch_reattack,09-C0303-bar65.mid,09-C0303-bar65.musicxml,09-C0303-bar65.svg
+cantopop:C1403@16,流淚行勝利道,許志安 Andy Hui,train,Cantopop-corpus-main/Humdrum-files/C1403.krn,cross_bar_tie|leading_rest|rest|same_pitch_reattack|sustained_rest,10-C1403-bar16.mid,10-C1403-bar16.musicxml,10-C1403-bar16.svg
+cantopop:C0103@30,爛泥,許志安 Andy Hui,train,Cantopop-corpus-main/Humdrum-files/C0103.krn,rest|sustained_rest,11-C0103-bar30.mid,11-C0103-bar30.musicxml,11-C0103-bar30.svg
+cantopop:C1804@47,停半分鐘聽一闋歌,許廷鏗 Alfred Hui,train,Cantopop-corpus-main/Humdrum-files/C1804.krn,adjacent_rests|cross_bar_tie|leading_rest|rest|sustained_rest,12-C1804-bar47.mid,12-C1804-bar47.musicxml,12-C1804-bar47.svg
+cantopop:C1503@10,無條件,陳奕迅 Eason Chan,train,Cantopop-corpus-main/Humdrum-files/C1503.krn,leading_rest|rest|same_pitch_reattack|sustained_rest,13-C1503-bar10.mid,13-C1503-bar10.musicxml,13-C1503-bar10.svg
+cantopop:C0903@18,原來過得很快樂,楊千嬅 Miriam Yeung,train,Cantopop-corpus-main/Humdrum-files/C0903.krn,adjacent_rests|rest|sustained_rest,14-C0903-bar18.mid,14-C0903-bar18.musicxml,14-C0903-bar18.svg
+cantopop:C0803@87,愛不疚,林峯 Raymond Lam,train,Cantopop-corpus-main/Humdrum-files/C0803.krn,cross_bar_tie|rest|sustained_rest,15-C0803-bar87.mid,15-C0803-bar87.musicxml,15-C0803-bar87.svg
+cantopop:C0404@87,愛與誠,古巨基 Leo Ku,train,Cantopop-corpus-main/Humdrum-files/C0404.krn,cross_bar_tie|same_pitch_reattack,16-C0404-bar87.mid,16-C0404-bar87.musicxml,16-C0404-bar87.svg
+cantopop:C0101@58,Shall We Talk,陳奕迅 Eason Chan,train,Cantopop-corpus-main/Humdrum-files/C0101.krn,leading_rest|rest|sustained_rest,17-C0101-bar58.mid,17-C0101-bar58.musicxml,17-C0101-bar58.svg
+cantopop:C0302@28,我的驕傲,容祖兒 Joey Yung,train,Cantopop-corpus-main/Humdrum-files/C0302.krn,adjacent_rests|cross_bar_tie|rest|same_pitch_reattack|sustained_rest,18-C0302-bar28.mid,18-C0302-bar28.musicxml,18-C0302-bar28.svg
+cantopop:C0403@2,世上只有,容祖兒 Joey Yung,train,Cantopop-corpus-main/Humdrum-files/C0403.krn,rest|same_pitch_reattack|sustained_rest,19-C0403-bar2.mid,19-C0403-bar2.musicxml,19-C0403-bar2.svg
+cantopop:C1202@49,戀無可戀,古巨基 Leo Ku,train,Cantopop-corpus-main/Humdrum-files/C1202.krn,adjacent_rests|rest|same_pitch_reattack|sustained_rest,20-C1202-bar49.mid,20-C1202-bar49.musicxml,20-C1202-bar49.svg

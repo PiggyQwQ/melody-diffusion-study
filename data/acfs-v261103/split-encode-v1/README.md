@@ -15,6 +15,13 @@
 - [volume_split.csv](volume_split.csv) 和 [summary.json](summary.json) 记录各卷分区、训练音域、验证结果与输入校验值。跨集合精确移调匹配为 0，近重复筛查另有 12 对跨集合候选待复核。
 - [encoded_SHA256SUMS](encoded_SHA256SUMS) 可核对本地生成的三个整数 JSONL 文件。
 
+## 审计与回放索引
+
+- [songs.csv](songs.csv) 保留曲名、源 MusicXML 路径、简谱音高参照和窗口数。`pitch_reference` 是原简谱的参照字段。
+- [group_edges.csv](group_edges.csv) 和 [exact_repeats.csv](exact_repeats.csv) 记录曲目分组证据和移调后的精确窗口匹配。
+- [near_repeats_review.csv](near_repeats_review.csv) 记录近重复候选及其分区。跨集合的 12 对候选排在表首。[超范围排除表](out_of_range.csv)
+- [真实曲目样例索引](samples/index.csv) 标明 20 段回放的曲目、起始小节和原谱位置。对应的 MIDI、MusicXML、谱例与逐音回读数据随下面的复现命令在本地生成。[合成延音测试](samples/synthetic_tie/round_trip.json) 使用单独构造的八小节测试片段，可直接查看其[谱例](samples/synthetic_tie/cross_bar_tie.svg)或试听 [MIDI](samples/synthetic_tie/cross_bar_tie.mid)。
+
 ## 生成模型输入
 
 从上游发行版下载元数据 ZIP 和 11 个省份乐谱 ZIP，将它们放进克隆仓库的同级目录 `acfs-v261103`，保持 ZIP 原样。以下 PowerShell 命令在仓库根目录执行，使用 Python 3.11 或更新版本。Windows 上请把 Verovio 安装在纯 ASCII 路径下。

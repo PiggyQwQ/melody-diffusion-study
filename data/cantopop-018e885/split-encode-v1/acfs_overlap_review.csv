@@ -1,0 +1,4 @@
+folk_window_id,folk_song_id,folk_group_id,folk_split,pop_window_id,pop_song_id,match,dice,matched_attacks,midi_shift_pop_minus_folk
+sichuan1:314@22,sichuan1:314,hebei1:9,train,cantopop:C0205@42,cantopop:C0205,exact,1,1,1
+sichuan1:314@22,sichuan1:314,hebei1:9,train,cantopop:C0403@35,cantopop:C0403,exact,1,1,10
+sichuan1:314@22,sichuan1:314,hebei1:9,train,cantopop:C0703@47,cantopop:C0703,exact,1,1,-3
