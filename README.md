@@ -2,6 +2,8 @@
 
 ## ACFS 八小节数据
 
+曲目划分、窗口索引、词表、统计和编码校验和见 [ACFS 划分与编码 V1](data/acfs-v261103/split-encode-v1/README.md)。
+
 `scripts/encode_folk_windows.py` 读取 ACFS `screen-v1` 的审计结果与候选起点。程序按曲目分组划分，确定训练词表，验证抽查样例，再输出三个集合的整数序列。`screen-v1` 的同级目录需包含已校验的乐谱包与元数据 ZIP，供抽样核对原谱。
 
 以下命令从课程根目录运行。使用 Python 3.11 或更新版本。Windows 上请将 Verovio 安装在纯 ASCII 路径下，例如当前用户的临时目录。
