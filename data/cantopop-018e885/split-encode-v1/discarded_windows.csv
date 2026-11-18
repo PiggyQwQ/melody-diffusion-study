@@ -1,4 +1,4 @@
-window_id,song_id,start_bar,reason
+﻿window_id,song_id,start_bar,reason
 cantopop:C0004@80,cantopop:C0004,80,sparse_exact_pop_overlap
 cantopop:C0103@49,cantopop:C0103,49,sparse_exact_pop_overlap
 cantopop:C0205@42,cantopop:C0205,42,sparse_exact_pop_overlap|exact_acfs_overlap

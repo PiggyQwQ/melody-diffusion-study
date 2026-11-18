@@ -1,4 +1,4 @@
-song_a,title_a,start_bar_a,split_a,group_a,song_b,title_b,start_bar_b,split_b,group_b,shift_b_minus_a,dice,matched_onsets,onsets_a,onsets_b,matched_pitches,same_normalized_title,cross_split,status
+﻿song_a,title_a,start_bar_a,split_a,group_a,song_b,title_b,start_bar_b,split_b,group_b,shift_b_minus_a,dice,matched_onsets,onsets_a,onsets_b,matched_pitches,same_normalized_title,cross_split,status
 hainan:319,说声情哥记号头,6,train,hainan:319,hainan:397,苦身为的是人民,6,validation,hainan:397,0,0.96,24,25,25,6,False,True,review
 jiangsu1:35,墙上头跑马难转弯,14,train,jiangsu1:35,jiangsu1:40,栀子花开大白袍,14,test,jiangsu1:40,0,0.95082,29,31,30,8,False,True,review
 hainan:652,江河不能割两断,1,train,hainan:652,hainan:807,保亭本是好地方,1,validation,hainan:807,0,0.941176,24,25,26,5,False,True,review

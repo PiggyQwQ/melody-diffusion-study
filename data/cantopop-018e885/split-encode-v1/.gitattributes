@@ -1,5 +1,0 @@
-*.jsonl -text
-*.json -text
-*.csv -text
-SHA256SUMS -text
-samples/** -text

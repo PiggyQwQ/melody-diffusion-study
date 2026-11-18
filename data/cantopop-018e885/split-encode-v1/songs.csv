@@ -1,4 +1,4 @@
-song_id,title,artist,year,source_kern,group_id,split,source_bars,candidate_windows,encoded_windows,status
+﻿song_id,title,artist,year,source_kern,group_id,split,source_bars,candidate_windows,encoded_windows,status
 cantopop:C0001,K歌之王,陳奕迅 Eason Chan,2000,Cantopop-corpus-main/Humdrum-files/C0001.krn,,,63,0,0,no_window
 cantopop:C0002,少女的祈禱,楊千嬅 Miriam Yeung,2000,Cantopop-corpus-main/Humdrum-files/C0002.krn,,,95,0,0,no_window
 cantopop:C0003,給自己的情書,王菲 Faye Wong,2000,Cantopop-corpus-main/Humdrum-files/C0003.krn,,,153,0,0,no_window

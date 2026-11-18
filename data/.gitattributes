@@ -1,0 +1,4 @@
+# Preserve the exact bytes of the versioned datasets on commit and checkout.
+/acfs-v261103/split-encode-v1/** -text whitespace=cr-at-eol
+/cantopop-018e885/split-encode-v1/** -text whitespace=cr-at-eol
+/acfs-v261103/*.csv -text

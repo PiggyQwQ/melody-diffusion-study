@@ -1,36 +1,57 @@
 # Cantopop 划分与编码 V1
 
-由 Jason Y H Lee 的 *A Corpus of Cantonese Popular Music, 2000–2020* 衍生。使用作者仓库提交 `018e88540b917c40dc3f7248ed98908208544b54` 的 Humdrum 转录谱。此版提取单声部、按谱面拍号筛选、切片、去重、划分和编码，并保留曲名及演唱者供溯源。衍生数据采用 CC BY 4.0。[作者项目](https://cantopop.humdrum.org/) · [固定版本](https://github.com/jasonleeubc/Cantopop-corpus/tree/018e88540b917c40dc3f7248ed98908208544b54) · [许可](LICENSE)
+2026 年 11 月 18 日。该版保留作者转录谱的 2/4 小节线，用于 64 格的粤语流行旋律实验准备。已确认同一作品不同转录可能标出不同拍号，现阶段以**转录谱标注的 2/4**解释该数据。[拍号复核](meter_review.md)
 
-| 集合 | 曲目 | 窗口 | 文件 |
-| --- | ---: | ---: | --- |
-| 训练 | 25 | 1,323 | [train.jsonl](train.jsonl) |
-| 验证 | 3 | 181 | [validation.jsonl](validation.jsonl) |
-| 测试 | 3 | 180 | [test.jsonl](test.jsonl) |
-| 合计 | 31 | 1,684 | |
+## 数据规模
 
-每行对应一个连续 8 小节的窗口。`tokens` 为 64 个整数，`REST=0` 开始休止，`HOLD=1` 延长已有发声或休止，ID 2–50 对应 MIDI 38–86。`window_id`、`song_id`、`volume`、`group_id`、`split` 和 `start_bar` 与 ACFS 使用相同字段。`start_bar` 为从 1 开始的源谱小节顺序索引，包含弱起。[共享词表](vocab.json) · [曲目清单](songs.csv) · [窗口索引](windows.csv)
+| 集合 | 曲目 | 曲目组 | 窗口 | 整数符号 |
+| --- | ---: | ---: | ---: | ---: |
+| 训练 | 25 | 25 | 1,323 | 84,672 |
+| 验证 | 3 | 3 | 181 | 11,584 |
+| 测试 | 3 | 3 | 180 | 11,520 |
+| 合计 | 31 | 31 | 1,684 | 107,776 |
 
-2/4 依据作者转录谱的拍号和小节线。同一旋律在其他转录中可能采用不同的小节分法，涉及原录音重音或拍号的比较需要另行核验。
+输入是 Jason Y H Lee 的 Cantopop Corpus，提交 `018e88540b917c40dc3f7248ed98908208544b54`，共 105 首，作者仓库标注 CC BY 4.0。[作者仓库](https://github.com/jasonleeubc/Cantopop-corpus/tree/018e88540b917c40dc3f7248ed98908208544b54) · [本地 ZIP](../../pop-candidates-2026-11-18/cantopop-018e885.zip)
 
-筛选和分区统计见 [screen_audit.json](screen_audit.json) 和 [summary.json](summary.json)。[discarded_windows.csv](discarded_windows.csv) 保存精确重复窗口的剔除记录。[SHA256SUMS](SHA256SUMS) 可核对数据文件。
+逐谱提取单一 `**kern` 旋律列，沿有明确边线的原谱小节读取。连续 8 小节标为 2/4 的窗口共 3,294 个，其中 2,514 个满足每小节 8 格及精确量化，1,697 个满足有发声、延音配对及边界完整。这 1,697 个窗口都落在 MIDI 38–86。正式解析识别了写在音名后的附点，按 Verovio 和 Humlib 的读法计算时值，同时剔除一处重复的延音结束标记。相较初筛净增 23 个窗口。[筛选统计](screen_audit.json) · [Humlib 时值实现](https://github.com/craigsapp/humlib/blob/master/src/Convert-rhythm.cpp#L61-L70)
 
-## 回放、去重与匹配记录
+跨曲目精确碰撞来自单音或三次起音后长休止的片段。剔除 13 个这类窗口，其中 3 个也与民歌训练集同一窗口移调后完全相同。剔除后流行集合之间和民歌、流行两库之间的精确移调重复均为 0。近重复筛查未产生候选。划分使用固定种子 `20261118`，同一曲目的全部保留窗口在同一集合。[剔除清单](discarded_windows.csv) · [跨库审核](acfs_overlap_review.csv)
 
-- [20 份回放样例](samples/index.html) 提供解码后的 MIDI、MusicXML 和五线谱。MIDI 使用固定 90 BPM 和钢琴音色。[样例索引](samples/index.csv) · [拍号复核](meter_review.md)
-- [分组依据](group_edges.csv)、[近重复复核表](near_repeats_review.csv) 和[跨库匹配审计](acfs_overlap_review.csv) 记录分组与去重结果。
-- [训练集配对](training_pairs.json) 列出两侧各 25 个曲目组和 1,323 个窗口的 ID。[训练先验统计](training_priors.json) 保存按音级的起音、时值和最佳五音模板覆盖率。匹配 ACFS 的整数序列由下面的命令从本地 ACFS 训练集生成。
+## 模型输入
 
-## 复现
+- `train.jsonl`、`validation.jsonl`、`test.jsonl` 与 ACFS 使用相同格式。逐行读取 `tokens`，每行 64 个整数。`REST=0` 进入休止，`HOLD=1` 延长当前状态，音高类 ID 2–50 对应 MIDI 38–86。连续同音的独立起音各有一个音高 ID，配对延音的后续位置为 `HOLD`。词表与 ACFS 逐字节相同。[共享词表](vocab.json)
+- `songs.csv` 保存 105 首的来源和筛选结果。`windows.csv` 可由 `window_id` 找到 ZIP 内源谱、物理小节序号、原谱打印小节号、源文件行号及稳定的谱面调性标注。物理序号从 1 开始，弱起计入序号。1,655 个保留窗口有单一谱面调性标注。[曲目清单](songs.csv) · [窗口索引](windows.csv)
+- `samples/index.html` 提供 20 首各 1 段的五线谱、MusicXML 和 MIDI。样例跨三个集合，10 段含跨小节延音，13 段含相邻同音重奏。MIDI 是整数数据解码后以固定 90 BPM 演奏的回放。[查看回放样例](samples/index.html)
 
-从仓库根目录执行以下命令。示例使用 Python 3.11 或更新版本、Verovio 6.4.1 和 Mido 1.3.3。将作者 ZIP 和已生成的 ACFS 数据放在仓库外，按实际位置调整路径。ACFS 目录需包含三个整数 JSONL、词表及 `near_repeats_review.csv`。一并生成的匹配民歌训练集由已有的 ACFS 本地数据构建。[ACFS 生成说明](../../acfs-v261103/split-encode-v1/README.md)
+## H3 匹配训练子集
+
+`acfs_matched_train.jsonl` 来自原 ACFS `train.jsonl`。从不同民歌曲目组各取一首，按流行训练曲目逐首配对，使每对曲目的窗口数相等。筛选民歌候选时排除了跨库匹配涉及的训练组，也排除了 ACFS 原近重复表中涉及跨集合候选的 12 个训练组。匹配用每段的起音数、平均起音 MIDI、音高跨度和休止格数，按流行训练侧的标准差缩放。[逐曲配对](training_pairs.json)
+
+| 指标 | Cantopop 训练 | ACFS 匹配训练 |
+| --- | ---: | ---: |
+| 曲目组 | 25 | 25 |
+| 窗口 | 1,323 | 1,323 |
+| 整数符号 | 84,672 | 84,672 |
+| 每窗平均起音 | 22.58 | 22.38 |
+| 平均起音 MIDI | 60.16 | 62.05 |
+| 每窗平均音高跨度（半音） | 11.65 | 11.68 |
+| 每窗平均休止格 | 14.32 | 6.81 |
+
+H3 的训练输入对应 `train.jsonl` 和 `acfs_matched_train.jsonl`。正式评测沿用现有 ACFS 留出集，对两模型提供同一受扰输入。两侧的音高跨度与起音数已接近，绝对音区和休止仍存在差异。训练先验文件附有两侧的 12 音级频数、相邻发声音程和最佳五音模板的描述性覆盖率。按曲目从干净输入拟合一个模板，先最大化起音覆盖，再用时值覆盖处理并列。此统计按训练窗口加权，包含重叠产生的重复观察。正式五声性评测仍用预先核定的目标集合。[训练先验统计](training_priors.json) · [运行汇总](summary.json)
+
+## 复跑与验证
+
+从课程根目录运行。实测 Python 3.13.11、Verovio 6.4.1、Mido 1.3.3。Windows 上请把 Verovio 装在纯 ASCII 路径下。输出目录须使用新路径。
 
 ```powershell
 $deps = Join-Path $env:TEMP 'acfs-split-encode-deps'
 python -m pip install --target $deps verovio==6.4.1 mido==1.3.3
 $env:PYTHONPATH = $deps
-python -X utf8 .\scripts\prepare_cantopop.py `
-  ..\datasets\cantopop-018e885.zip `
-  ..\datasets\acfs-v261103\split-encode-v1 `
-  ..\datasets\cantopop-018e885\split-encode-v1 --seed 20261118
+python -X utf8 .\melody-diffusion-study\scripts\prepare_cantopop.py `
+  .\local-worklog\datasets\pop-candidates-2026-11-18\cantopop-018e885.zip `
+  .\local-worklog\datasets\acfs-v261103\split-encode-v1 `
+  .\local-worklog\datasets\cantopop-018e885\split-encode-v1 --seed 20261118
+python -m unittest discover -s .\melody-diffusion-study\scripts -p 'test_*.py'
 ```
+
+全量 1,684 个窗口逐一核对整数回读的音高、起音、休止及时值。另用 Verovio 直接导入原 `.krn` 独立核对 54 个候选片段，包括所有 24 个涉及后置附点的候选窗口。26 项测试通过。从相同输入和种子在新目录复跑，77 个程序生成文件的 SHA-256 逐一相同。独立核验了两库精确重复、曲目组分区、窗口索引完整性，以及 1,323 个匹配民歌窗口与原训练记录的对应关系。

@@ -1,4 +1,4 @@
-window_id,title,artist,split,source_kern,features,midi,musicxml,svg
+﻿window_id,title,artist,split,source_kern,features,midi,musicxml,svg
 cantopop:C1701@101,失魂記,李克勤 Hacken Lee,validation,Cantopop-corpus-main/Humdrum-files/C1701.krn,adjacent_rests|cross_bar_tie|leading_rest|rest|same_pitch_reattack|sustained_rest,01-C1701-bar101.mid,01-C1701-bar101.musicxml,01-C1701-bar101.svg
 cantopop:C0204@91,愛不釋手,李克勤 Hacken Lee,train,Cantopop-corpus-main/Humdrum-files/C0204.krn,adjacent_rests|cross_bar_tie|rest|same_pitch_reattack|sustained_rest,02-C0204-bar91.mid,02-C0204-bar91.musicxml,02-C0204-bar91.svg
 cantopop:C0205@15,明年今日,陳奕迅 Eason Chan,test,Cantopop-corpus-main/Humdrum-files/C0205.krn,adjacent_rests|leading_rest|rest|sustained_rest,03-C0205-bar15.mid,03-C0205-bar15.musicxml,03-C0205-bar15.svg

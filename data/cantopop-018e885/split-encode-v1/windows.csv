@@ -1,4 +1,4 @@
-window_id,song_id,volume,group_id,split,start_bar,source_kern,printed_start_bar,end_bar,printed_end_bar,source_line,score_key
+﻿window_id,song_id,volume,group_id,split,start_bar,source_kern,printed_start_bar,end_bar,printed_end_bar,source_line,score_key
 cantopop:C0004@2,cantopop:C0004,cantopop,cantopop:C0004,train,2,Cantopop-corpus-main/Humdrum-files/C0004.krn,1,9,8,19,*A-:
 cantopop:C0004@4,cantopop:C0004,cantopop,cantopop:C0004,train,4,Cantopop-corpus-main/Humdrum-files/C0004.krn,3,11,10,30,*A-:
 cantopop:C0004@5,cantopop:C0004,cantopop,cantopop:C0004,train,5,Cantopop-corpus-main/Humdrum-files/C0004.krn,4,12,11,35,*A-:

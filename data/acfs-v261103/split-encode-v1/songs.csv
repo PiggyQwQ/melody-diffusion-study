@@ -1,4 +1,4 @@
-song_id,volume,title,group_id,split,source_split_group,clean_melody_hash,pitch_reference,musicxml,candidate_windows,excluded_windows,encoded_windows
+﻿song_id,volume,title,group_id,split,source_split_group,clean_melody_hash,pitch_reference,musicxml,candidate_windows,excluded_windows,encoded_windows
 beijing:107,beijing,大五佛,beijing:107,train,beijing:107,143355b90ee7e45033929074e6276adb33a61b63d32ab8b3d818fa2143229299,1=♯F,lyrics-included/beijing/107_大五佛.musicxml,33,0,33
 beijing:11,beijing,运河出仓号子（一）,beijing:11,test,beijing:11,32f751fc1140e28da1356cc79788f21abef1a18bb75b6540efc220f8e976b974,1=F,lyrics-included/beijing/11_运河出仓号子（一）.musicxml,4,0,4
 beijing:114,beijing,关帝庙歌,beijing:114,validation,beijing:114,82ecdebe32ff2e50fe0c8ffdedb92b35ba717fa2191a9046f31e143f12e751cc,1=G,lyrics-included/beijing/114_关帝庙歌.musicxml,4,0,4
