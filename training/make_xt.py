@@ -99,8 +99,12 @@ def main(argv=None):
     else:
         if not args.window_ids.is_file():
             sys.exit(f"Window list not found: {args.window_ids}")
-        window_ids = [line.strip() for line in args.window_ids.read_text(encoding="utf-8-sig").splitlines()
-                      if line.strip()]
+        try:
+            text = args.window_ids.read_text(encoding="utf-8-sig")
+        except UnicodeDecodeError:
+            sys.exit(f"{args.window_ids} is not UTF-8 text (PowerShell's '>' writes UTF-16). Save it as UTF-8, "
+                     "e.g. with  Set-Content -Encoding utf8, or create it with training/scripts/select_windows.py")
+        window_ids = [line.strip() for line in text.splitlines() if line.strip()]
         known = {row["window_id"] for row in rows}
         unknown = [w for w in window_ids if w not in known]
         if unknown:
