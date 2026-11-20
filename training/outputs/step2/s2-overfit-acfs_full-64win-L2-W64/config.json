@@ -1,0 +1,67 @@
+{
+  "dataset": "acfs_full",
+  "seed": 0,
+  "model": {
+    "width": 64,
+    "layers": 2,
+    "heads": 4,
+    "ff_mult": 4,
+    "dropout": 0.0
+  },
+  "parameters": 117107,
+  "optimizer": {
+    "name": "AdamW",
+    "lr": 0.0003,
+    "weight_decay": 0.01,
+    "betas": [
+      0.9,
+      0.999
+    ]
+  },
+  "schedule": {
+    "warmup": 500,
+    "decay": "cosine to 0",
+    "schedule_updates": 6000
+  },
+  "grad_clip": 1.0,
+  "batch_size": 64,
+  "steps": 6000,
+  "validate_every": 500,
+  "save_steps": [],
+  "validation_times": [
+    10,
+    25,
+    50,
+    75,
+    90
+  ],
+  "validation_seed": 9182,
+  "validation_batch": 64,
+  "train_path": "data/acfs-v261103/split-encode-v1/train.jsonl",
+  "validation_path": "data/acfs-v261103/split-encode-v1/validation.jsonl",
+  "train_sha256": "bcf4fa6c5fa85075d4be2b3c60d610c0c0ba86dfe80321163f015d33e2ca9c8d",
+  "validation_sha256": "a08af368b256cbd56a25632fcb4f0437db2f7845c0c01079aa96816450709805",
+  "vocab_path": "data/acfs-v261103/split-encode-v1/vocab.json",
+  "vocab_sha256": "71e5534f1137b6027326a628cae80809eb3797178bbdddf6cf6229872f74e8e8",
+  "train_windows": 64,
+  "validation_windows": 4074,
+  "train_windows_total": 32656,
+  "validation_windows_total": 4074,
+  "T": 100,
+  "K": 51,
+  "length": 64,
+  "git_commit": "a4441825c4b4b927d3155c72ca20cee4ae44efc7",
+  "git_dirty": false,
+  "environment": {
+    "python": "3.14.7",
+    "torch": "2.9.1+cu128",
+    "cuda": "12.8",
+    "cudnn": 91002,
+    "host": "lyg0169",
+    "device": "cpu",
+    "torch_threads": 4,
+    "omp_num_threads": "4",
+    "cpu_count": 128
+  },
+  "command": "training/train.py --device cpu --threads 4 --run-dir ~/homework/melody-study/runs/s2-overfit-acfs_full-64win-L2-W64 --dataset acfs_full --train-windows 64 --batch-size 64 --steps 6000 --layers 2 --width 64 --dropout 0 --validate-every 500 --train-eval-windows 64 --memorizer-floor --seed 0"
+}
