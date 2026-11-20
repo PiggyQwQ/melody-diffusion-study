@@ -170,7 +170,7 @@ def train(args):
     model = D.build_model(model_cfg).to(device)
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
     scheduler = torch.optim.lr_scheduler.LambdaLR(
-        optimizer, lambda s: lr_factor(s, args.warmup, args.steps))
+        optimizer, lambda s: lr_factor(s, args.warmup, args.schedule_steps))
     sampler = WindowSampler(len(clean), args.batch_size, args.seed)
     noise = torch.Generator(device=device).manual_seed(D.stable_seed(args.seed, "training-noise"))
 
@@ -178,7 +178,7 @@ def train(args):
     config = dict(
         dataset=args.dataset, seed=args.seed, model=model_cfg, parameters=D.parameter_count(model),
         optimizer=dict(name="AdamW", lr=args.lr, weight_decay=args.weight_decay, betas=(0.9, 0.999)),
-        schedule=dict(warmup=args.warmup, decay="cosine to 0", total_updates=args.steps),
+        schedule=dict(warmup=args.warmup, decay="cosine to 0", schedule_updates=args.schedule_steps),
         grad_clip=args.grad_clip, batch_size=args.batch_size, steps=args.steps,
         validate_every=args.validate_every, save_steps=args.save_steps,
         validation_times=list(D.VALIDATION_TIMES), validation_seed=D.VALIDATION_SEED,
@@ -220,8 +220,9 @@ def train(args):
             windows=len(clean), per_t=floor, mean_validation_times=sum(floor.values()) / len(floor),
             mean_t_1_to_100=sum(floor_all.values()) / len(floor_all)), indent=2) + "\n")
 
-    fields = ["step", "train_loss", "val_loss", "lr", "elapsed_seconds"] + \
-             [f"val_t{t}" for t in D.VALIDATION_TIMES] + (["train_eval_loss"] if fixed_train else [])
+    fields = ["step", "train_loss", "val_loss", "lr", "elapsed_seconds"] + [f"val_t{t}" for t in D.VALIDATION_TIMES]
+    if fixed_train:
+        fields += ["train_eval_loss"] + [f"train_eval_t{t}" for t in D.VALIDATION_TIMES]
     log_path = run / "train_log.csv"
     new_log = not log_path.exists()
     log_file = log_path.open("a", newline="", encoding="utf-8")
@@ -257,7 +258,9 @@ def train(args):
                        lr=f"{lr:.3e}", elapsed_seconds=f"{elapsed_before + time.time() - clock:.1f}",
                        **{f"val_t{s}": f"{v:.6f}" for s, v in per_t.items()})
             if fixed_train:
-                row["train_eval_loss"] = f"{fixed_loss(model, fixed_train, device)[0]:.6f}"
+                train_eval, train_per_t = fixed_loss(model, fixed_train, device)
+                row["train_eval_loss"] = f"{train_eval:.6f}"
+                row.update({f"train_eval_t{s}": f"{v:.6f}" for s, v in train_per_t.items()})
             writer.writerow(row)
             log_file.flush()
             print(" | ".join(f"{k} {v}" for k, v in row.items()), flush=True)
@@ -288,7 +291,9 @@ def parse_args(argv=None):
     p.add_argument("--data-root", type=Path, default=D.DATA_ROOT)
     p.add_argument("--device", choices=("auto", "cpu", "cuda"), default="auto")
     p.add_argument("--threads", type=int, default=4)
-    p.add_argument("--steps", type=int, required=True)
+    p.add_argument("--steps", type=int, required=True, help="Number of updates to run")
+    p.add_argument("--schedule-steps", type=int,
+                   help="Length of the cosine schedule (default: --steps); larger values stop before the decay ends")
     p.add_argument("--batch-size", type=int, default=64)
     p.add_argument("--width", type=int, default=64)
     p.add_argument("--layers", type=int, default=2)
@@ -310,6 +315,9 @@ def parse_args(argv=None):
                    help="Write the exact-posterior loss floor of a memoriser of the training windows")
     p.add_argument("--resume", type=Path)
     args = p.parse_args(argv)
+    args.schedule_steps = args.schedule_steps or args.steps
+    if args.schedule_steps < args.steps:
+        p.error("--schedule-steps must be at least --steps")
     if min(args.steps, args.batch_size, args.validate_every, args.warmup) <= 0:
         p.error("steps, batch size, validation interval and warm-up must be positive")
     return args
