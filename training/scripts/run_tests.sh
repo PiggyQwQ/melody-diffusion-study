@@ -4,5 +4,5 @@ set -euo pipefail
 source "$(dirname "$0")/common.sh"
 cd "$REPO"
 git log -1 --format='commit %H'
-"$PY" -c "import torch, numpy, mido, pytest, sys; print('python', sys.version.split()[0], 'torch', torch.__version__, 'cuda', torch.version.cuda, 'numpy', numpy.__version__, 'mido', mido.__version__, 'pytest', pytest.__version__)"
+"$PY" -c "import sys, torch; from importlib.metadata import version as v; print('python', sys.version.split()[0], 'torch', torch.__version__, 'cuda', torch.version.cuda, *[f'{m} {v(m)}' for m in ('numpy', 'mido', 'pytest')])"
 CUDA_VISIBLE_DEVICES="" "$PY" -m pytest -q -p no:cacheprovider training/tests "$@"
