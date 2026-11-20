@@ -1,0 +1,67 @@
+{
+  "dataset": "cantopop",
+  "seed": 2,
+  "model": {
+    "width": 128,
+    "layers": 2,
+    "heads": 4,
+    "ff_mult": 4,
+    "dropout": 0.1
+  },
+  "parameters": 430771,
+  "optimizer": {
+    "name": "AdamW",
+    "lr": 0.0003,
+    "weight_decay": 0.01,
+    "betas": [
+      0.9,
+      0.999
+    ]
+  },
+  "schedule": {
+    "warmup": 500,
+    "decay": "cosine to 0",
+    "schedule_updates": 10000
+  },
+  "grad_clip": 1.0,
+  "batch_size": 64,
+  "steps": 2000,
+  "validate_every": 250,
+  "save_steps": [],
+  "validation_times": [
+    10,
+    25,
+    50,
+    75,
+    90
+  ],
+  "validation_seed": 9182,
+  "validation_batch": 64,
+  "train_path": "data/cantopop-018e885/split-encode-v1/train.jsonl",
+  "validation_path": "data/acfs-v261103/split-encode-v1/validation.jsonl",
+  "train_sha256": "e5b6ad0d3950c5011ac0c0c532342b4859955178da9e913354041f7749a2cbf9",
+  "validation_sha256": "a08af368b256cbd56a25632fcb4f0437db2f7845c0c01079aa96816450709805",
+  "vocab_path": "data/cantopop-018e885/split-encode-v1/vocab.json",
+  "vocab_sha256": "71e5534f1137b6027326a628cae80809eb3797178bbdddf6cf6229872f74e8e8",
+  "train_windows": 1323,
+  "validation_windows": 4074,
+  "train_windows_total": 1323,
+  "validation_windows_total": 4074,
+  "T": 100,
+  "K": 51,
+  "length": 64,
+  "git_commit": "ecb9070ad85c38f87aedc0642a45dbc791cd0c19",
+  "git_dirty": false,
+  "environment": {
+    "python": "3.14.7",
+    "torch": "2.9.1+cu128",
+    "cuda": "12.8",
+    "cudnn": 91002,
+    "host": "lyg0169",
+    "device": "cpu",
+    "torch_threads": 4,
+    "omp_num_threads": "4",
+    "cpu_count": 128
+  },
+  "command": "training/train.py --device cpu --threads 4 --run-dir ~/homework/melody-study/runs/h3-cantopop-s2 --dataset cantopop --steps 2000 --schedule-steps 10000 --validate-every 250 --seed 2 --layers 2 --width 128"
+}
