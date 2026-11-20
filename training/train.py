@@ -9,6 +9,7 @@ import argparse
 import csv
 import json
 import math
+import os
 import platform
 import socket
 import subprocess
@@ -125,7 +126,8 @@ def lr_factor(step, warmup, total):
 def environment(device):
     info = dict(python=platform.python_version(), torch=torch.__version__,
                 cuda=torch.version.cuda, cudnn=torch.backends.cudnn.version(),
-                host=socket.gethostname(), device=str(device))
+                host=socket.gethostname(), device=str(device), torch_threads=torch.get_num_threads(),
+                omp_num_threads=os.environ.get("OMP_NUM_THREADS"), cpu_count=os.cpu_count())
     if device.type == "cuda":
         info["gpu"] = torch.cuda.get_device_name(device)
     return info
@@ -146,7 +148,7 @@ def train(args):
     device = torch.device(args.device if args.device != "auto" else
                           "cuda" if torch.cuda.is_available() else "cpu")
     if device.type == "cpu":
-        torch.set_num_threads(min(args.threads, torch.get_num_threads()))
+        torch.set_num_threads(args.threads)
     run = Path(args.run_dir)
     if run.exists() and any(run.iterdir()) and not args.resume:
         raise SystemExit(f"Run directory is not empty: {run}")
@@ -220,7 +222,7 @@ def train(args):
             windows=len(clean), per_t=floor, mean_validation_times=sum(floor.values()) / len(floor),
             mean_t_1_to_100=sum(floor_all.values()) / len(floor_all)), indent=2) + "\n")
 
-    fields = ["step", "train_loss", "val_loss", "lr", "elapsed_seconds"] + [f"val_t{t}" for t in D.VALIDATION_TIMES]
+    fields = ["step", "train_loss", "val_loss", "lr", "elapsed_seconds", "validation_seconds"] +         [f"val_t{t}" for t in D.VALIDATION_TIMES]
     if fixed_train:
         fields += ["train_eval_loss"] + [f"train_eval_t{t}" for t in D.VALIDATION_TIMES]
     log_path = run / "train_log.csv"
@@ -233,7 +235,7 @@ def train(args):
     print(f"{args.dataset} on {device} | {len(clean)} train / {len(val)} validation windows | "
           f"{config['parameters']:,} parameters | commit {commit} dirty={dirty}", flush=True)
     clock = time.time()
-    running, count = 0.0, 0
+    running, count, val_seconds = 0.0, 0, 0.0
     model.train()
     for step in range(start_step + 1, args.steps + 1):
         x_0 = clean[sampler.next()].to(device, non_blocking=True)
@@ -253,9 +255,12 @@ def train(args):
             raise RuntimeError(f"Non-finite loss at step {step}")
 
         if step % args.validate_every == 0 or step == args.steps:
+            val_clock = time.time()
             val_loss, per_t = fixed_loss(model, fixed_val, device)
+            val_seconds += time.time() - val_clock
             row = dict(step=step, train_loss=f"{running / count:.6f}", val_loss=f"{val_loss:.6f}",
                        lr=f"{lr:.3e}", elapsed_seconds=f"{elapsed_before + time.time() - clock:.1f}",
+                       validation_seconds=f"{val_seconds:.1f}",
                        **{f"val_t{s}": f"{v:.6f}" for s, v in per_t.items()})
             if fixed_train:
                 train_eval, train_per_t = fixed_loss(model, fixed_train, device)
