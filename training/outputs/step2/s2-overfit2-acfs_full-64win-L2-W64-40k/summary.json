@@ -1,9 +1,0 @@
-{
-  "best_step": 2000,
-  "best_val_loss": 1.550045028783904,
-  "last_step": 40000,
-  "last_val_loss": 3.156163154493434,
-  "elapsed_seconds": 965.5,
-  "parameters": 117107,
-  "selection_rule": "lowest fixed-corruption validation CE"
-}

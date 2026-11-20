@@ -1,2 +1,0 @@
-step,train_loss,val_loss,lr,elapsed_seconds,validation_seconds,val_t10,val_t25,val_t50,val_t75,val_t90
-200,2.742301,1.508436,1.200e-04,35.2,6.2,1.183791,1.368272,1.535974,1.704778,1.749366
