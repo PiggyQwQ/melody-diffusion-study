@@ -1,11 +1,10 @@
-"""Reconstruction, one-shot ablation, unconditional generation and trajectories.
+"""Unconditional generation, trajectories and the nearest-neighbour reference.
 
 Subcommands (run from the repository root):
-    make-xt      build a provisional xt file from the ACFS validation split
-    reconstruct  reverse-sample every case of an xt file (and the one-shot ablation)
-    generate     sample from pure noise and find training-set nearest neighbours
-    trajectory   forward and reverse trajectories of fixed validation windows
-See training/INTERFACE.md for the file formats.
+    generate      sample from pure noise and find training-set nearest neighbours
+    trajectory    forward and reverse trajectories of fixed validation windows
+    nn-reference  nearest neighbours of random validation windows, compared with generated samples
+The xt files are built by training/make_xt.py and reconstructed by training/reconstruct.py.
 """
 
 import argparse
@@ -20,8 +19,6 @@ import torch
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import diffusion as D  # noqa: E402
 
-XT_FIELDS = ("case_id", "window_id", "song_id", "group_id", "split", "t", "rho", "noise_seed", "noisy_tokens")
-METHODS = ("diffusion", "oneshot_argmax", "oneshot_sample")
 EXPORT_TIMES = (0, 10, 25, 50, 75, 90, 100)
 
 
@@ -47,116 +44,6 @@ def checkpoint_info(path, state):
     config = state["config"]
     return dict(checkpoint=D.show_path(path), checkpoint_sha256=D.sha256_file(path), checkpoint_step=state["step"],
                 model_dataset=config["dataset"], train_seed=config["seed"])
-
-
-# ------------------------------------------------------------------- make-xt
-
-def make_xt(args):
-    """100 validation windows x 5 t x 2 noise repetitions, closed-form corruption."""
-    out = fresh_output(args.output)
-    _, val_path = D.dataset_paths("acfs_full", args.data_root)
-    if val_path.name != "validation.jsonl":
-        raise AssertionError
-    rows = D.read_rows(val_path)
-    D.clean_tensor(rows)
-    chosen = sorted(random.Random(args.seed).sample(range(len(rows)), args.windows))
-    cases = []
-    for index in chosen:
-        row = rows[index]
-        for t in args.times:
-            for rep in range(args.repeats):
-                noise_seed = D.stable_seed("provisional-xt", row["window_id"], t, rep)
-                generator = torch.Generator().manual_seed(noise_seed)
-                x_0 = torch.tensor([row["tokens"]])
-                x_t = D.corrupt(x_0, torch.tensor([t]), generator)[0].tolist()
-                cases.append(dict(case_id=f"prov-{row['window_id']}-t{t:03d}-r{rep}", window_id=row["window_id"],
-                                  song_id=row["song_id"], group_id=row["group_id"], split=row["split"], t=t,
-                                  rho=t / D.T, noise_seed=noise_seed, noisy_tokens=x_t,
-                                  clean_tokens=row["tokens"]))
-    write_jsonl(out, cases)
-    meta = dict(kind="provisional xt (pipeline check only)", source=str(val_path.relative_to(D.REPO_ROOT)),
-                source_sha256=D.sha256_file(val_path), window_selection_seed=args.seed, windows=args.windows,
-                times=args.times, repeats=args.repeats, cases=len(cases),
-                noise_seed_rule="stable_seed('provisional-xt', window_id, t, repetition): first 4 bytes of "
-                                "SHA-256 of the '|'-joined labels, masked to 31 bits; one CPU torch.Generator per case",
-                corruption="diffusion.corrupt (closed form Q̄_t)")
-    out.with_suffix(".meta.json").write_text(json.dumps(meta, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    print(f"Wrote {len(cases)} cases to {out}")
-
-
-# --------------------------------------------------------------- reconstruct
-
-def read_xt(path):
-    """Read cases and drop every field the model must not see."""
-    cases = []
-    seen = set()
-    for number, row in enumerate(D.read_rows(path), 1):
-        missing = [field for field in XT_FIELDS if field not in row]
-        if missing:
-            raise ValueError(f"{path}:{number} lacks {missing}")
-        case = {field: row[field] for field in XT_FIELDS}  # clean_tokens is never copied
-        D.check_tokens(case["noisy_tokens"], case["case_id"])
-        if type(case["t"]) is not int or not 0 <= case["t"] <= D.T:
-            raise ValueError(f"{path}:{number} has t outside 0..{D.T}")
-        if case["case_id"] in seen:
-            raise ValueError(f"Duplicate case_id {case['case_id']}")
-        seen.add(case["case_id"])
-        cases.append(case)
-    return cases
-
-
-def processing_batches(cases, batch_size):
-    """Stable sort by t (descending), then file order; consecutive blocks of batch_size."""
-    order = sorted(range(len(cases)), key=lambda i: (-cases[i]["t"], i))
-    return [order[i:i + batch_size] for i in range(0, len(order), batch_size)]
-
-
-def reconstruct(args):
-    device = pick_device(args.device)
-    out = fresh_output(args.output)
-    model, state = D.load_checkpoint(args.checkpoint, device)
-    info = checkpoint_info(args.checkpoint, state)
-    cases = read_xt(args.xt)
-    batches = processing_batches(cases, args.batch_size)
-    methods = args.methods
-    results = {i: [] for i in range(len(cases))}
-    clock = time.time()
-    for method in methods:
-        runs = 1 if method == "oneshot_argmax" else args.samples
-        for sample_index in range(runs):
-            seed = None if method == "oneshot_argmax" else D.stable_seed(args.seed, method, sample_index)
-            generator = torch.Generator(device=device).manual_seed(seed) if seed is not None else None
-            for batch in batches:
-                x_t = torch.tensor([cases[i]["noisy_tokens"] for i in batch], device=device)
-                t = torch.tensor([cases[i]["t"] for i in batch], device=device)
-                if method == "diffusion":
-                    x_0, _ = D.reverse_chain(model, x_t, t, generator)
-                else:
-                    x_0 = D.one_shot(model, x_t, t, generator, mode=method.split("_")[1])
-                for i, tokens in zip(batch, x_0.tolist()):
-                    case = cases[i]
-                    results[i].append(dict(
-                        case_id=case["case_id"], window_id=case["window_id"], t=case["t"], method=method,
-                        model_dataset=info["model_dataset"], train_seed=info["train_seed"],
-                        checkpoint_sha256=info["checkpoint_sha256"], sample_index=sample_index,
-                        sample_seed=seed, **D.describe(tokens)))
-    write_jsonl(out, (row for i in range(len(cases)) for row in results[i]))
-    meta = dict(
-        input=D.show_path(args.xt), input_sha256=D.sha256_file(args.xt), cases=len(cases),
-        **info, methods=methods, samples_per_case={m: 1 if m == "oneshot_argmax" else args.samples for m in methods},
-        base_seed=args.seed,
-        sample_seed_rule="stable_seed(base_seed, method, sample_index); one device generator per "
-                         "(method, sample_index), consumed batch by batch in the processing order",
-        batch_size=args.batch_size,
-        processing_order="cases stably sorted by descending t, then by input line; consecutive blocks of batch_size",
-        batches=[[cases[i]["case_id"] for i in batch] for batch in batches],
-        output_order="input line order; within a case: method order, then sample_index",
-        sampler="inverse-CDF categorical draw from diffusion.reverse_probs at every step t..1; rows with t=0 are copied",
-        device=str(device), torch=torch.__version__, seconds=round(time.time() - clock, 1),
-        ignored_input_fields="clean_tokens and any field outside the documented xt schema")
-    out.with_suffix(".meta.json").write_text(json.dumps(meta, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    print(f"Wrote {sum(map(len, results.values()))} rows for {len(cases)} cases to {out} "
-          f"in {meta['seconds']} s")
 
 
 # ------------------------------------------------------------------ generate
@@ -319,27 +206,95 @@ def trajectory(args):
     print(f"Wrote trajectories for {[rows[i]['window_id'] for i in chosen]} to {out_dir}")
 
 
+# -------------------------------------------------------------- nn-reference
+
+def quantile(values, q):
+    """Linear interpolation between order statistics (as numpy's default)."""
+    v = sorted(values)
+    position = (len(v) - 1) * q
+    low = int(position)
+    high = min(low + 1, len(v) - 1)
+    return v[low] + (v[high] - v[low]) * (position - low)
+
+
+def distance_summary(values):
+    return dict(n=len(values), min=min(values), p05=quantile(values, 0.05), p25=quantile(values, 0.25),
+                median=quantile(values, 0.5), p75=quantile(values, 0.75),
+                count_le_4=sum(v <= 4 for v in values), count_le_8=sum(v <= 8 for v in values))
+
+
+def nn_reference(args):
+    device = pick_device(args.device)
+    out_dir = Path(args.output_dir)
+    if out_dir.exists() and any(out_dir.iterdir()):
+        raise SystemExit(f"Output directory is not empty: {out_dir}")
+    out_dir.mkdir(parents=True, exist_ok=True)
+    train_path, val_path = D.dataset_paths("acfs_full", args.data_root)
+    train_rows = D.read_rows(train_path)
+    train = D.clean_tensor(train_rows)
+    val_rows = D.read_rows(val_path)
+    D.clean_tensor(val_rows)
+    chosen = sorted(random.Random(args.seed).sample(range(len(val_rows)), args.count))
+    val = torch.tensor([val_rows[i]["tokens"] for i in chosen])
+    val_nn = nearest_neighbours(val, train, device)
+    val_records = []
+    for k, index in enumerate(chosen):
+        d, i, _ = (v[k] for v in val_nn["plain"])
+        td, ti, ts = (v[k] for v in val_nn["transposed"])
+        val_records.append(dict(window_id=val_rows[index]["window_id"], song_id=val_rows[index]["song_id"],
+                                nn_hamming=d, nn_window_id=train_rows[i]["window_id"],
+                                nn_transposed_hamming=td, nn_transposed_window_id=train_rows[ti]["window_id"],
+                                nn_transposed_shift=ts))
+    write_jsonl(out_dir / "validation_nn.jsonl", val_records)
+
+    generated = [json.loads(line) for path in args.generated
+                 for line in Path(path).read_text(encoding="utf-8").splitlines() if line.strip()]
+    by_id = {row["window_id"]: row for row in train_rows}
+    close = [row for row in generated
+             if row["nn_hamming"] <= args.close or row["nn_transposed_hamming"] <= args.close]
+    listing = []
+    for row in close:
+        tag = row["case_id"]
+        D.export_score(out_dir / "scores" / f"{tag}__generated", row["decoded_tokens"])
+        entry = dict(case_id=tag, model_dataset=row["model_dataset"], train_seed=row["train_seed"],
+                     nn_hamming=row["nn_hamming"], nn_window_id=row["nn_window_id"],
+                     nn_transposed_hamming=row["nn_transposed_hamming"],
+                     nn_transposed_window_id=row["nn_transposed_window_id"],
+                     nn_transposed_shift=row["nn_transposed_shift"], scores=[f"scores/{tag}__generated"])
+        for window_id in dict.fromkeys([row["nn_window_id"], row["nn_transposed_window_id"]]):
+            name = f"{tag}__train__{window_id.replace(':', '-').replace('@', '-bar')}"
+            D.export_score(out_dir / "scores" / name, by_id[window_id]["tokens"])
+            entry["scores"].append(f"scores/{name}")
+        listing.append(entry)
+
+    summary = dict(
+        reference_training_file=str(train_path.relative_to(D.REPO_ROOT)), reference_sha256=D.sha256_file(train_path),
+        reference_windows=len(train_rows),
+        validation_file=str(val_path.relative_to(D.REPO_ROOT)), validation_sha256=D.sha256_file(val_path),
+        validation_selection=f"sorted(random.Random({args.seed}).sample(range({len(val_rows)}), {args.count})) "
+                             "as 0-based line indices of the validation file",
+        generated_files=[Path(p).name for p in args.generated],
+        generated_sha256={Path(p).name: D.sha256_file(p) for p in args.generated},
+        distances="plain: Hamming distance over 64 tokens; transposed: minimum over shifting the pitch tokens of "
+                  "the query by -12..+12 semitones (pitches leaving MIDI 38-86 never match). Same code as the "
+                  "nearest-neighbour fields of the generated files.",
+        quantiles="linear interpolation between order statistics",
+        validation=dict(plain=distance_summary([r["nn_hamming"] for r in val_records]),
+                        transposed=distance_summary([r["nn_transposed_hamming"] for r in val_records])),
+        generated=dict(plain=distance_summary([r["nn_hamming"] for r in generated]),
+                       transposed=distance_summary([r["nn_transposed_hamming"] for r in generated])),
+        close_threshold=args.close, close_generated=listing)
+    (out_dir / "nn_reference.json").write_text(json.dumps(summary, indent=2, ensure_ascii=False) + "\n",
+                                               encoding="utf-8")
+    print(json.dumps({k: summary[k] for k in ("validation", "generated")}, indent=1))
+    print(f"{len(listing)} generated windows within distance {args.close}")
+
+
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--data-root", type=Path, default=D.DATA_ROOT)
     p.add_argument("--device", choices=("auto", "cpu", "cuda"), default="auto")
     sub = p.add_subparsers(dest="command", required=True)
-
-    m = sub.add_parser("make-xt")
-    m.add_argument("--output", required=True)
-    m.add_argument("--windows", type=int, default=100)
-    m.add_argument("--times", type=int, nargs="+", default=list(D.VALIDATION_TIMES))
-    m.add_argument("--repeats", type=int, default=2)
-    m.add_argument("--seed", type=int, default=20261120)
-
-    r = sub.add_parser("reconstruct")
-    r.add_argument("--checkpoint", type=Path, required=True)
-    r.add_argument("--xt", type=Path, required=True)
-    r.add_argument("--output", type=Path, required=True)
-    r.add_argument("--methods", nargs="+", choices=METHODS, default=list(METHODS))
-    r.add_argument("--samples", type=int, default=3)
-    r.add_argument("--batch-size", type=int, default=500)
-    r.add_argument("--seed", type=int, default=20261121)
 
     g = sub.add_parser("generate")
     g.add_argument("--checkpoint", type=Path, required=True)
@@ -353,9 +308,16 @@ def main(argv=None):
     j.add_argument("--windows", type=int, default=3)
     j.add_argument("--seed", type=int, default=20261123)
 
+    n = sub.add_parser("nn-reference")
+    n.add_argument("--generated", nargs="+", required=True, help="generate__*.jsonl files")
+    n.add_argument("--output-dir", type=Path, required=True)
+    n.add_argument("--count", type=int, default=300)
+    n.add_argument("--seed", type=int, default=20261124)
+    n.add_argument("--close", type=int, default=4)
+
     args = p.parse_args(argv)
     torch.set_num_threads(min(4, torch.get_num_threads()))
-    commands = {"make-xt": make_xt, "reconstruct": reconstruct, "generate": generate, "trajectory": trajectory}
+    commands = {"generate": generate, "trajectory": trajectory, "nn-reference": nn_reference}
     commands[args.command](args)
 
 

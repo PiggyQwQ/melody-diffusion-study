@@ -93,6 +93,23 @@ def show_path(path):
     return str(path).replace(str(Path.home()), "~")
 
 
+def cpu_name():
+    """Processor model name, best effort."""
+    import platform
+    try:
+        if sys.platform == "win32":
+            import winreg
+            key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"HARDWARE\DESCRIPTION\System\CentralProcessor\0")
+            return winreg.QueryValueEx(key, "ProcessorNameString")[0].strip()
+        if Path("/proc/cpuinfo").is_file():
+            for line in Path("/proc/cpuinfo").read_text().splitlines():
+                if line.startswith("model name"):
+                    return line.split(":", 1)[1].strip()
+    except OSError:
+        pass
+    return platform.processor() or None
+
+
 def stable_seed(*parts):
     """Deterministic 31-bit seed from arbitrary labels."""
     digest = sha256("|".join(str(part) for part in parts).encode("utf-8")).digest()
@@ -197,7 +214,10 @@ def parameter_count(model):
 
 
 def load_checkpoint(path, device):
-    state = torch.load(path, map_location=device, weights_only=False)
+    # weights_only loading: tensors and plain containers only; the saved config
+    # also holds the PyTorch version object, which is allowed explicitly.
+    with torch.serialization.safe_globals([torch.torch_version.TorchVersion]):
+        state = torch.load(path, map_location=device, weights_only=True)
     config = state["config"]
     if (config["T"], config["K"], config["length"]) != (T, K, LENGTH):
         raise ValueError("Checkpoint uses a different diffusion setting")
