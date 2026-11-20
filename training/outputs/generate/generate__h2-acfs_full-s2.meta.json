@@ -1,0 +1,19 @@
+{
+  "checkpoint": "~/homework/melody-study/runs/h2-acfs_full-s2/best.pt",
+  "checkpoint_sha256": "0d36dd13953bd7c0751ded51e3fe68ea4673054e7f7beb8cd4267cb3d094ba6f",
+  "checkpoint_step": 20000,
+  "model_dataset": "acfs_full",
+  "train_seed": 2,
+  "count": 100,
+  "base_seed": 20261122,
+  "sample_seed": 2102066061,
+  "sample_seed_rule": "stable_seed(base_seed, 'generate', model_dataset, train_seed); one device generator draws x_T (uniform over 51 classes) and then every reverse step",
+  "batch_size": 100,
+  "nearest_neighbour_reference": "data/acfs-v261103/split-encode-v1/train.jsonl",
+  "nearest_neighbour_reference_sha256": "bcf4fa6c5fa85075d4be2b3c60d610c0c0ba86dfe80321163f015d33e2ca9c8d",
+  "reference_windows": 32656,
+  "distance": "Hamming distance over the 64 decoded tokens; transposed: pitch tokens of the generated window shifted by -12..+12 semitones (pitches leaving 38-86 never match), minimum over shifts; ties keep the first training window and the lowest shift",
+  "device": "cpu",
+  "torch": "2.9.1+cu128",
+  "seconds": 10.1
+}
