@@ -1,0 +1,103 @@
+{
+  "note": "Official checkpoints. validation_ce: mean cross-entropy per slot on the fixed corruption of the ACFS validation split (t = 10, 25, 50, 75, 90).",
+  "network": {
+    "layers": 2,
+    "width": 128,
+    "heads": 4,
+    "ff_mult": 4,
+    "dropout": 0.1,
+    "parameters": 430771
+  },
+  "runs": [
+    {
+      "run": "h2-acfs_full-s0",
+      "file": "h2-acfs_full-s0.pt",
+      "dataset": "acfs_full",
+      "seed": 0,
+      "step": 20000,
+      "validation_ce": 0.680603921746997,
+      "checkpoint_rule": "validation-best of 20,000 updates",
+      "sha256": "e6effa58cf3a6ce411f832c29a557b7ff82b8fad8624e153b54a18922c0754cb"
+    },
+    {
+      "run": "h2-acfs_full-s1",
+      "file": "h2-acfs_full-s1.pt",
+      "dataset": "acfs_full",
+      "seed": 1,
+      "step": 20000,
+      "validation_ce": 0.6797820385730202,
+      "checkpoint_rule": "validation-best of 20,000 updates",
+      "sha256": "ad280488b22a838b228e8526410469404441a74ee236b2ef018d5357e3a44616"
+    },
+    {
+      "run": "h2-acfs_full-s2",
+      "file": "h2-acfs_full-s2.pt",
+      "dataset": "acfs_full",
+      "seed": 2,
+      "step": 20000,
+      "validation_ce": 0.6833936508695577,
+      "checkpoint_rule": "validation-best of 20,000 updates",
+      "sha256": "0d36dd13953bd7c0751ded51e3fe68ea4673054e7f7beb8cd4267cb3d094ba6f"
+    },
+    {
+      "run": "h3-acfs_matched-s0",
+      "file": "h3-acfs_matched-s0.pt",
+      "dataset": "acfs_matched",
+      "seed": 0,
+      "step": 2000,
+      "validation_ce": 0.8953216178193651,
+      "checkpoint_rule": "fixed update 2,000 (schedule of 10,000)",
+      "sha256": "2319c3001a6108a71227dfab486a55d0f0e739e6d310f0a78e19cb7a75cb4698"
+    },
+    {
+      "run": "h3-acfs_matched-s1",
+      "file": "h3-acfs_matched-s1.pt",
+      "dataset": "acfs_matched",
+      "seed": 1,
+      "step": 2000,
+      "validation_ce": 0.9076664680701935,
+      "checkpoint_rule": "fixed update 2,000 (schedule of 10,000)",
+      "sha256": "0e18ab27b1f377881117b5b8e73e795b3348bf92dffd96fe04da4d29f0f9e53d"
+    },
+    {
+      "run": "h3-acfs_matched-s2",
+      "file": "h3-acfs_matched-s2.pt",
+      "dataset": "acfs_matched",
+      "seed": 2,
+      "step": 2000,
+      "validation_ce": 0.914172710855041,
+      "checkpoint_rule": "fixed update 2,000 (schedule of 10,000)",
+      "sha256": "6ee986bbdf2f2a59c15b7306ac83be80de50d0b47b26e70d9a9c597ad64a426b"
+    },
+    {
+      "run": "h3-cantopop-s0",
+      "file": "h3-cantopop-s0.pt",
+      "dataset": "cantopop",
+      "seed": 0,
+      "step": 2000,
+      "validation_ce": 1.16859382550741,
+      "checkpoint_rule": "fixed update 2,000 (schedule of 10,000)",
+      "sha256": "2cada8ab440fb1fb5b060cd0810df92bad7cacf8616a86218001281744521b79"
+    },
+    {
+      "run": "h3-cantopop-s1",
+      "file": "h3-cantopop-s1.pt",
+      "dataset": "cantopop",
+      "seed": 1,
+      "step": 2000,
+      "validation_ce": 1.2122027944453393,
+      "checkpoint_rule": "fixed update 2,000 (schedule of 10,000)",
+      "sha256": "f4cbcf381e0d2ef4805dfc98da26822c60ea1190da2bbad633454a1950e3ac77"
+    },
+    {
+      "run": "h3-cantopop-s2",
+      "file": "h3-cantopop-s2.pt",
+      "dataset": "cantopop",
+      "seed": 2,
+      "step": 2000,
+      "validation_ce": 1.2018315071326937,
+      "checkpoint_rule": "fixed update 2,000 (schedule of 10,000)",
+      "sha256": "7d78014b692f391e963a532a7e6524d6152aa3e40f8628e682eebb964e7592ce"
+    }
+  ]
+}
