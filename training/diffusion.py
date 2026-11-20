@@ -88,6 +88,11 @@ def dataset_paths(name, data_root=DATA_ROOT):
     return trains[name], validation / "validation.jsonl"
 
 
+def show_path(path):
+    """Path for records: the home directory is written as ~."""
+    return str(path).replace(str(Path.home()), "~")
+
+
 def stable_seed(*parts):
     """Deterministic 31-bit seed from arbitrary labels."""
     digest = sha256("|".join(str(part) for part in parts).encode("utf-8")).digest()

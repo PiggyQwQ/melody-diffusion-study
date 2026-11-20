@@ -45,7 +45,7 @@ def write_jsonl(path, rows):
 
 def checkpoint_info(path, state):
     config = state["config"]
-    return dict(checkpoint=str(path), checkpoint_sha256=D.sha256_file(path), checkpoint_step=state["step"],
+    return dict(checkpoint=D.show_path(path), checkpoint_sha256=D.sha256_file(path), checkpoint_step=state["step"],
                 model_dataset=config["dataset"], train_seed=config["seed"])
 
 
@@ -142,7 +142,7 @@ def reconstruct(args):
                         sample_seed=seed, **D.describe(tokens)))
     write_jsonl(out, (row for i in range(len(cases)) for row in results[i]))
     meta = dict(
-        input=str(args.xt), input_sha256=D.sha256_file(args.xt), cases=len(cases),
+        input=D.show_path(args.xt), input_sha256=D.sha256_file(args.xt), cases=len(cases),
         **info, methods=methods, samples_per_case={m: 1 if m == "oneshot_argmax" else args.samples for m in methods},
         base_seed=args.seed,
         sample_seed_rule="stable_seed(base_seed, method, sample_index); one device generator per "

@@ -191,7 +191,7 @@ def train(args):
         train_windows=len(clean), validation_windows=len(val),
         train_windows_total=len(train_rows), validation_windows_total=len(val_rows),
         T=D.T, K=D.K, length=D.LENGTH, git_commit=commit, git_dirty=dirty,
-        environment=environment(device), command=" ".join(sys.argv),
+        environment=environment(device), command=" ".join(sys.argv).replace(str(Path.home()), "~"),
     )
 
     start_step, best, best_step, elapsed_before = 0, float("inf"), None, 0.0
