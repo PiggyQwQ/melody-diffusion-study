@@ -1,0 +1,2 @@
+# Keep the exact bytes of recorded outputs so that recorded SHA-256 values match.
+** -text
