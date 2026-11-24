@@ -1,0 +1,8 @@
+扩散模型实验室 · Windows x64 便携版
+
+解压整个 ZIP，然后双击 MelodyLab.exe。请将 site 文件夹和同目录的 DLL 文件与 EXE 放在一起。
+四个页面、曲库和试听音色均在包内。启动后可以断网使用。
+
+需要 64 位 Windows 10 或 Windows 11、.NET Framework 4.8 和 Microsoft Edge WebView2 Runtime。
+如果启动提示缺少 WebView2 Runtime，可从微软官方页面安装 x64 Evergreen 运行时。
+https://developer.microsoft.com/microsoft-edge/webview2/#download-section

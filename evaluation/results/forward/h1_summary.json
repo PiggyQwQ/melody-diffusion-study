@@ -1,0 +1,48 @@
+{
+  "n_runs": 50,
+  "times": [
+    0,
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    55,
+    60,
+    65,
+    70,
+    75,
+    80,
+    85,
+    90,
+    95,
+    100
+  ],
+  "frozen_test_windows": 419,
+  "strict_p0_1_windows": 287,
+  "low_pent_control_windows": 347,
+  "vocab_constants": {
+    "K": 51,
+    "P_pitch_tokens": 49,
+    "m_pentatonic_tokens": 21,
+    "limit_pitch_only_12pc": 0.4166666666666667,
+    "limit_fixed_denom_m_over_K": 0.4117647058823529,
+    "limit_cond_pooled_m_over_P": 0.42857142857142855,
+    "mismatch_slope": 0.9803921568627451
+  },
+  "max_abs_errors": {
+    "pitch_only_strict_p0_1": 0.001929099982791005,
+    "pitch_only_frozen_test": 0.0013499384993850283,
+    "pitch_only_low_pent": 0.0014464263283506806,
+    "full_vocab_mismatch": 0.0009085006317561817,
+    "full_vocab_a_all": 0.0005175356240347817,
+    "full_vocab_a_clean_onsets": 0.0009866455807415186,
+    "full_vocab_cond_pooled": 0.0008389983030977488
+  },
+  "seconds": 12.16
+}

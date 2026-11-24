@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#133a32">
+  <meta name="description" content="北京大学《音乐与数学》课程项目，试听离散扩散模型中的旋律扰动与恢复。">
+  <title>扩散模型实验室 · 音乐与数学</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="data/experiments.js"></script>
+  <script defer src="vendor/vexflow.js"></script>
+  <script defer src="music.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#effects" aria-label="扩散模型实验室首页">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span>扩散模型实验室<small>音乐与数学</small></span>
+      </a>
+      <nav class="navigation" aria-label="实验页面">
+        <a href="#effects" aria-current="page">模型效果</a>
+        <a href="#process">运行过程</a>
+        <a href="#comparison">模型对比</a>
+        <a href="#library">旋律库</a>
+      </nav>
+      <button class="outline-button fullscreen" type="button" id="fullscreen">全屏演示</button>
+    </div>
+  </header>
+
+  <main id="main" class="workspace" tabindex="-1">
+    <noscript><p class="notice">请允许浏览器运行 JavaScript，以使用档位、谱面和试听。</p></noscript>
+
+    <section id="page-effects" aria-labelledby="effects-title">
+      <div class="hero">
+        <div class="hero-intro">
+          <p class="eyebrow"><span></span> 扩散模型实验</p>
+          <h1 id="effects-title">旋律还能<span>找回来吗？</span></h1>
+        </div>
+        <div class="trend">
+          <div class="trend-top">
+            <h2>重合度</h2>
+            <div class="legend">
+              <span><i class="clay"></i>加噪后</span>
+              <span><i class="mint"></i>模型处理后</span>
+            </div>
+          </div>
+          <canvas id="effect-chart" height="158" role="img" aria-label="各加噪档位的重合度"></canvas>
+        </div>
+      </div>
+
+      <div class="controls effect-controls">
+        <div class="song-control">
+          <label for="effect-song">实验曲目</label>
+          <select id="effect-song"></select>
+        </div>
+        <div class="range-control">
+          <div class="range-heading"><label for="effect-range">加噪程度（%）</label><output id="effect-step" for="effect-range">50</output></div>
+          <input id="effect-range" type="range" min="0" max="5" value="3" step="1">
+          <div class="range-ticks" id="effect-ticks" aria-label="加噪档位"></div>
+        </div>
+      </div>
+
+      <div class="section-bar">
+        <div>
+          <h2>旋律变化示意图</h2>
+        </div>
+        <div class="view-switch" role="group" aria-label="模型效果谱面">
+          <button type="button" data-view="roll" aria-pressed="true">钢琴卷帘</button>
+          <button type="button" data-view="score" aria-pressed="false">五线谱</button>
+        </div>
+      </div>
+      <div id="effect-tracks" class="track-grid"></div>
+      <p class="page-note" id="effect-note" hidden>原旋律对照 · 三个版本在第 0 档一致。</p>
+    </section>
+
+    <section id="page-process" aria-labelledby="process-title" hidden>
+      <div class="hero page-hero">
+        <div class="hero-intro">
+          <p class="eyebrow"><span></span> 同一条运行轨迹</p>
+          <h1 id="process-title">旋律如何<span>一步步变化</span></h1>
+        </div>
+        <div class="process-route" aria-label="从原旋律经逐步加噪到逐步处理">
+          <span><i class="pill-point"></i>原旋律</span>
+          <span><i class="pill-point clay"></i>逐步加噪</span>
+          <span><i class="pill-point mint"></i>逐步处理</span>
+        </div>
+      </div>
+      <div class="controls trace-controls">
+        <div>
+          <label for="trace-song">演示曲目</label>
+          <select id="trace-song"></select>
+        </div>
+        <div>
+          <label for="trace-origin">从哪步往回处理</label>
+          <select id="trace-origin">
+            <option value="50">第50步</option>
+            <option value="100">第100步</option>
+          </select>
+        </div>
+      </div>
+      <div class="timeline">
+        <div class="timeline-head">
+          <div><p class="timeline-phase" id="trace-phase">正向加噪</p><h2>第 <span id="trace-step">0</span> 步</h2></div>
+          <button type="button" class="primary-button" id="trace-play" aria-pressed="false">播放过程</button>
+        </div>
+        <label class="sr-only" for="trace-range">拖动到轨迹中的任一步</label>
+        <input class="trace-range" id="trace-range" type="range" min="0" max="100" value="0" step="1">
+        <div class="trace-captions">
+          <button type="button" id="trace-start">原旋律</button>
+          <button type="button" id="trace-midpoint">加噪到第 50 步</button>
+          <button type="button" id="trace-end">处理后的旋律</button>
+        </div>
+      </div>
+      <div class="section-bar">
+        <div><h2>当前旋律</h2></div>
+        <div class="view-switch" role="group" aria-label="运行过程谱面">
+          <button type="button" data-view="roll" aria-pressed="true">钢琴卷帘</button>
+          <button type="button" data-view="score" aria-pressed="false">五线谱</button>
+        </div>
+      </div>
+      <div id="trace-tracks" class="track-grid single"></div>
+      <p class="page-note" id="trace-note" hidden>第 100 步为纯随机状态，从这里往回得到的是新生成的旋律。原旋律只作为演示参照。</p>
+    </section>
+
+    <section id="page-comparison" aria-labelledby="comparison-title" hidden>
+      <div class="hero page-hero">
+        <div class="hero-intro">
+          <p class="eyebrow"><span></span> 使用不同的训练集</p>
+          <h1 id="comparison-title">两个模型<span>补旋律</span>的差异</h1>
+        </div>
+        <div class="trend">
+          <div class="trend-top">
+            <h2>重合度</h2>
+            <div class="legend">
+              <span><i class="clay"></i>加噪后</span>
+              <span><i class="mint"></i>中国民歌模型处理后</span>
+              <span><i class="lavender"></i>粤语流行模型处理后</span>
+            </div>
+          </div>
+          <canvas id="compare-chart" height="158" role="img" aria-label="各加噪档位的重合度"></canvas>
+        </div>
+      </div>
+      <div class="controls compare-controls">
+        <div>
+          <p class="compare-input-label" id="compare-input-label">输入旋律</p>
+          <div class="corpus-switch" role="group" aria-labelledby="compare-input-label">
+            <button type="button" data-compare-corpus="folk" aria-pressed="true">中国民歌</button>
+            <button type="button" data-compare-corpus="pop" aria-pressed="false">粤语流行</button>
+          </div>
+        </div>
+        <div>
+          <label for="compare-song">对比曲目</label>
+          <select id="compare-song"></select>
+        </div>
+        <div class="range-control">
+          <div class="range-heading"><label for="compare-range">加噪程度（%）</label><output id="compare-step" for="compare-range">75</output></div>
+          <input id="compare-range" type="range" min="0" max="4" value="3" step="1">
+          <div class="range-ticks" id="compare-ticks" aria-label="加噪档位"></div>
+        </div>
+      </div>
+      <div class="section-bar">
+        <div><h2>两份处理结果</h2></div>
+        <div class="view-switch" role="group" aria-label="模型对比谱面">
+          <button type="button" data-view="roll" aria-pressed="true">钢琴卷帘</button>
+          <button type="button" data-view="score" aria-pressed="false">五线谱</button>
+        </div>
+      </div>
+      <div id="compare-tracks" class="track-grid"></div>
+    </section>
+
+    <section id="page-library" aria-labelledby="library-heading" hidden>
+      <div class="hero page-hero library-hero">
+        <div class="hero-intro">
+          <p class="eyebrow"><span></span> 实验用到的旋律</p>
+          <h1 id="library-heading">两库<span>旋律浏览器</span></h1>
+          <p>统一90bpm。</p>
+        </div>
+        <div class="library-counts" id="library-counts"></div>
+      </div>
+      <div class="library-layout">
+        <aside class="catalog" aria-label="曲目索引">
+          <div class="corpus-switch" role="group" aria-label="选择语料库">
+            <button type="button" data-corpus="folk" aria-pressed="true">中国民歌</button>
+            <button type="button" data-corpus="pop" aria-pressed="false">粤语流行</button>
+          </div>
+          <label for="library-search">搜索曲目</label>
+          <input id="library-search" type="search" placeholder="曲名、地区或歌手" autocomplete="off">
+          <p class="catalog-count" id="library-total" aria-live="polite"></p>
+          <ul id="library-list" class="song-list"></ul>
+          <div class="pagination">
+            <button id="library-prev" type="button" class="outline-button">上一页</button>
+            <span id="library-page"></span>
+            <button id="library-next" type="button" class="outline-button">下一页</button>
+          </div>
+        </aside>
+        <div class="library-content">
+          <div id="library-selection">
+            <div class="section-bar library-selection-head">
+              <div><h2 id="library-title"></h2><p id="library-detail"></p></div>
+              <div class="view-switch" role="group" aria-label="两库旋律谱面">
+                <button type="button" data-view="roll" aria-pressed="true">钢琴卷帘</button>
+                <button type="button" data-view="score" aria-pressed="false">五线谱</button>
+              </div>
+            </div>
+            <div class="fragment-control">
+              <label for="library-fragment">选择八小节片段</label>
+              <select id="library-fragment"></select>
+            </div>
+          </div>
+          <div id="library-tracks" class="track-grid single"></div>
+        </div>
+      </div>
+    </section>
+    <p id="app-status" class="sr-only" role="status"></p>
+  </main>
+
+</body>
+</html>
